@@ -102,10 +102,12 @@
                 const result = await response.json();
 
                 if (response.ok) {
+                    spinner.style.display = 'none';
                     alert('Login successful');
                     window.location.href='GatePass.html';
                     // Handle successful login (e.g., redirect to admin dashboard)
                 } else {
+                    spinner.style.display = 'none';
                     alert('Login failed: ' + result.message);
                     // Handle login failure
                 }
