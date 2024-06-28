@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="AdminLogin.css">
+    <style>
+        /* Spinner styles */
+        .spinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: #3498db;
+            animation: spinner 1s infinite;
+        }
+
+        @keyframes spinner {
+            0% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(90deg);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1) rotate(180deg);
+            }
+
+            75% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(270deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <form id="login-form" autocomplete="off">
+                <div class="input-group">
+                    <input type="text" id="email" name="email" required autocomplete="off" autocapitalize="none"
+                        spellcheck="false">
+                    <label for="email">Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" required autocomplete="off">
+                    <label for="password">Password</label>
+                </div>
+                <div class="remember-me">
+                    <input type="checkbox" id="remember-me" name="remember">
+                    <label for="remember-me">Remember me</label>
+                </div>
+                <button type="button" onclick="login()">Login</button>
+                <a href="#">Forgot your password?</a>
+            </form>
+        </div>
+        <div id="spinner" class="spinner"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Disable autocomplete on the form and its fields
+            const form = document.getElementById('login-form');
+            form.setAttribute('autocomplete', 'off');
+
+            // Clear input fields on load to prevent browser autofill
+            const inputs = form.querySelectorAll('input[type="text"], input[type="password"]');
+            inputs.forEach(input => {
+                input.value = '';
+                input.addEventListener('focus', () => {
+                    input.value = '';
+                });
+            });
+        });
+
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const spinner = document.getElementById('spinner');
+            spinner.style.display = 'block';
+
+            try { 
+                const response = await fetch('/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Login successful');
+                    // Handle successful login (e.g., redirect to admin dashboard)
+                } else {
+                    alert('Login failed: ' + result.message);
+                    // Handle login failure
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert('An error occurred during login.');
+            } finally {
+                spinner.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

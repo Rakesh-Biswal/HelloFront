@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gate Pass Card</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffcccc;
+        }
+        .card {
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #000;
+            background-color: #fff;
+        }
+        .header {
+            text-align: center;
+            font-weight: bold;
+        }
+        .section {
+            margin-bottom: 10px;
+        }
+        .terms {
+            background-color: #ff9999;
+            padding: 10px;
+        }
+        .signature {
+            display: flex;
+            justify-content: space-between;
+        }
+        .stamp {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #000;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">GATE PASS</div>
+        <div class="section">
+            <label for="validity">Valid From/To:</label>
+            <input type="text" id="validity" name="validity">
+        </div>
+        <div class="signature">
+            <div class="stamp"></div>
+            <div>
+                <label for="signature">Signature of Card Holder:</label>
+                <input type="text" id="signature" name="signature">
+            </div>
+        </div>
+        <div class="terms">
+            Terms & Conditions:<br>
+            Please carry the Identity Card always within factory premises...
+        </div>
+    </div>
+</body>
+</html>
