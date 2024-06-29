@@ -213,10 +213,10 @@
             try {
                 const response = await fetch(`${apiUrl}/employee/register`, {
                     method: 'POST',
-                    body: formData,
                     headers: {
-                        'Accept': 'application/json',
-                    }
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({formData})
                 });
 
                 const result = await response.json();
