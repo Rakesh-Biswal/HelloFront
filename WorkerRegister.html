@@ -202,18 +202,15 @@
             const workerPhoto = document.getElementById('workerPhoto').files[0];
             const workerAddress = document.getElementById('workerAddress').value;
 
-            const formData = new FormData();
-            formData.append('workerName', workerName);
-            formData.append('contractor', contractor);
-            formData.append('guardian', guardian);
-            formData.append('sex', sex);
-            formData.append('workerPhoto', workerPhoto);
-            formData.append('workerAddress', workerAddress);
 
             try {
                 const response = await fetch(`${apiUrl}/employee/register`, {
                     method: 'POST',
-                    body: formData,
+                    
+                    headers: {
+                        'ContentType': 'application/json',       
+                    },
+                    body: JSON.stringify({workerName,contractor,guardian,sex,workerPhoto,workerAddress})
                 });
 
                 const result = await response.json();
