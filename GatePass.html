@@ -1,13 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gate Pass Card</title>
-    <link rel="stylesheet" href="GatePass.css">
+    <title>Gate Pass Generation</title>
+
+    <style>
+        /* Existing styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 35%;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+            animation: slideIn 0.5s ease-in-out;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            font-size: 14px;
+        }
+
+        .input-group input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: scale(1.03);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .gate-pass-card {
+            display: none;
+            /* Initially hide the gate pass card */
+            width: 700px;
+            height: auto;
+            border: 2px solid #000;
+            border-radius: 10px;
+            background-color: #ff5b5b;
+            padding: 30px;
+            color: #000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header,
+        .body,
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .header-left,
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .gate-pass-title {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .mil-dri,
+        .mil-dri-number {
+            font-weight: bold;
+        }
+
+        .body {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .photo {
+            width: 120px;
+            height: 150px;
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .details p {
+            margin-bottom: 10px;
+        }
+
+        .value {
+            font-weight: bold;
+        }
+
+        .footer {
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .signature-card-holder,
+        .signature-authorised {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .signature-card-holder p,
+        .signature-authorised p {
+            font-size: 14px;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="gate-pass-card">
+    <div class="container" id="search-container">
+        <h2>Generate Gate Pass</h2>
+        <div class="input-group">
+            <label for="employeeName">Employee Name</label>
+            <input type="text" id="employeeName" name="employeeName" required>
+        </div>
+        <div class="input-group">
+            <label for="employeeId">Employee ID</label>
+            <input type="text" id="employeeId" name="employeeId" required>
+        </div>
+        <button onclick="generateGatePass()">Generate</button>
+    </div>
+
+    <div class="gate-pass-card" id="gatePassCard">
         <div class="header">
             <div class="header-left">
                 <p class="gate-pass-title">GATE PASS</p>
@@ -21,14 +238,14 @@
         </div>
         <div class="body">
             <div class="photo">
-                <p>Photo</p>
+                <img id="employeePhoto" src="" alt="Employee Photo">
             </div>
             <div class="details">
-                <p>Name: <span class="value">GAJENDRA GHADAI</span></p>
-                <p>Working under Contractor: <span class="value">SAI SIVANK ENTERPRISES</span></p>
-                <p>Guardian / Spouse: <span class="value">SANATANA GHADAI</span></p>
-                <p>Address: <span class="value">TAPOSINATRA, RAJKANPUR, DIST-JAJPUR</span></p>
-                <p>SEX - <span class="value">M</span></p>
+                <p>Name: <span class="value" id="employeeNameValue"></span></p>
+                <p>Working under Contractor: <span class="value" id="contractor"></span></p>
+                <p>Guardian / Spouse: <span class="value" id="guardian"></span></p>
+                <p>Address: <span class="value" id="address"></span></p>
+                <p>SEX - <span class="value" id="sex"></span></p>
             </div>
         </div>
         <div class="footer">
@@ -40,5 +257,38 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+        const apiUrl = "https://pvtcompany.onrender.com";
+        async function generateGatePass() {
+            const name = document.getElementById('employeeName').value;
+            const id = document.getElementById('employeeId').value;
+
+            try {
+                const response = await fetch(`${apiUrl}/employee/${name}/${id}`);
+                if (!response.ok) {
+                    throw new Error('Employee not found');
+                }
+
+                const employee = await response.json();
+
+                // Populate gate pass card
+                document.getElementById('employeeNameValue').innerText = employee.workerName;
+                document.getElementById('contractor').innerText = employee.contractor;
+                document.getElementById('guardian').innerText = employee.guardian;
+                document.getElementById('address').innerText = employee.workerAddress;
+                document.getElementById('sex').innerText = employee.sex;
+                document.getElementById('employeePhoto').src = `${apiUrl}/uploads/${employee.workerPhoto}`;
+
+                // Hide the search form and show the gate pass card
+                document.getElementById('search-container').style.display = 'none';
+                document.getElementById('gatePassCard').style.display = 'block';
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+    </script>
 </body>
+
 </html>
