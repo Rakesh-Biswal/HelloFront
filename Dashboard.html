@@ -23,7 +23,6 @@
             align-items: center;
             height: 77px;
             width: 100vw;
-            background-color: white;
             background-color: rgb(0, 0, 0);
             color: white;
         }
@@ -90,7 +89,6 @@
             padding: 10px;
             box-shadow: 0px 0px 20px 4px rgb(46 30 30 / 28%);
             transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
-
         }
 
         .box:hover {
@@ -134,41 +132,38 @@
 <body>
 
     <nav id="nav-bar">
-        <span><img class="company-logo" src="logo.jpg" alt=""></span>
-        <span class="welcome-msg">Welcome !</span>
+        <span><img class="company-logo" src="logo.jpg" alt="Company Logo"></span>
+        <span class="welcome-msg">Welcome!</span>
         <div class="nav-items">
             <a href="/">Home</a>
             <a href="index.html">Sign out</a>
             <a href="/">How to generate get pass?</a>
         </div>
-
     </nav>
+
     <section>
         <div class="main">
             <div class="box box-1">
                 <span class="card-info">Generate Get Pass</span>
-                <span class="click-below">Click below .</span>
+                <span class="click-below">Click below.</span>
                 <button class="generate-btn">Generate</button>
             </div>
             <div class="box box-2">
                 <span class="card-info">New Employee Registration</span>
-                <span class="click-below">Click below and fill the form .</span>
+                <span class="click-below">Click below and fill the form.</span>
                 <button class="generate-btn" id="reg">Register</button>
             </div>
         </div>
     </section>
 
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById(reg).addEventListener("click", () => {
+            document.getElementById('reg').addEventListener('click', function() {
                 window.location.href = "WorkerRegister.html";
             });
         });
-
     </script>
 
 </body>
-
 
 </html>
