@@ -146,7 +146,7 @@
             <div class="box box-1">
                 <span class="card-info">Generate Get Pass</span>
                 <span class="click-below">Click below.</span>
-                <button class="generate-btn">Generate</button>
+                <button class="generate-btn" id="Gen">Generate</button>
             </div>
             <div class="box box-2">
                 <span class="card-info">New Employee Registration</span>
@@ -161,6 +161,10 @@
             document.getElementById('reg').addEventListener('click', function() {
                 window.location.href = "WorkerRegister.html";
             });
+            document.getElementById('Gen').addEventListener('click', function() {
+                window.location.href = "GatePass.html";
+            });
+
         });
     </script>
 
