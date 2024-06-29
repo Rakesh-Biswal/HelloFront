@@ -25,7 +25,8 @@
 
         .container {
             width: 70%;
-            max-width: 500px; /* Adjust max-width to your preference */
+            max-width: 500px;
+            /* Adjust max-width to your preference */
             background-color: #fff;
             padding: 30px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -54,12 +55,16 @@
         }
 
         .input-group input {
-            width: calc(100% - 20px); /* Adjust input width to fit container */
-            padding: 15px; /* Increased padding for better visualization */
+            width: calc(100% - 20px);
+            /* Adjust input width to fit container */
+            padding: 15px;
+            /* Increased padding for better visualization */
             border: 2px solid #ccc;
-            border-radius: 8px; /* Slightly rounded corners */
+            border-radius: 8px;
+            /* Slightly rounded corners */
             transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            font-size: 16px; /* Larger font size for better readability */
+            font-size: 16px;
+            /* Larger font size for better readability */
         }
 
         .input-group input:focus {
@@ -74,7 +79,8 @@
             border-radius: 8px;
             background-color: #3498db;
             color: #fff;
-            font-size: 18px; /* Larger font size for better visibility */
+            font-size: 18px;
+            /* Larger font size for better visibility */
             cursor: pointer;
             transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
         }
@@ -107,7 +113,8 @@
         }
 
         .gate-pass-card {
-            display: none; /* Initially hide the gate pass card */
+            display: none;
+            /* Initially hide the gate pass card */
             width: 100%;
             max-width: 700px;
             margin-top: 30px;
@@ -261,7 +268,7 @@
             const id = document.getElementById('employeeId').value;
 
             try {
-                const response = await fetch(`${apiUrl}/employee/${name}/${id}`);
+
                 if (!response.ok) {
                     throw new Error('Employee not found');
                 }
@@ -275,6 +282,10 @@
                 document.getElementById('address').innerText = employee.workerAddress;
                 document.getElementById('sex').innerText = employee.sex;
                 document.getElementById('employeePhoto').src = `${apiUrl}/uploads/${employee.workerPhoto}`;
+
+                const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
+                document.getElementById('employeePhoto').src = photoUrl; // Set the employee photo
+
 
                 // Hide the search form and show the gate pass card
                 document.getElementById('search-container').style.display = 'none';
