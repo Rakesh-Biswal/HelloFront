@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,14 +14,15 @@
             height: 100vh;
             background-color: #f0f0f0;
             margin: 0;
+            font-family: 'Arial', sans-serif;
         }
 
         .container {
-            width: 50%;
+            width: 60%;
             background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
             transition: transform 0.3s ease-in-out;
         }
 
@@ -31,33 +33,41 @@
         h2 {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 36px;
+            color: #333;
+            animation: fadeIn 1s ease-in-out;
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             position: relative;
+            animation: slideIn 0.5s ease-in-out;
         }
 
         .input-group label {
             position: absolute;
-            top: -20px;
-            left: 0;
-            font-size: 12px;
-            color: #333;
+            top: -25px;
+            left: 10px;
+            font-size: 14px;
+            color: #3498db;
+            background: #fff;
+            padding: 0 5px;
         }
 
         .input-group input,
         .input-group select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            transition: border-color 0.3s ease-in-out;
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            font-size: 16px;
         }
 
         .input-group input:focus,
         .input-group select:focus {
             border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
         }
 
         .input-group select {
@@ -66,26 +76,68 @@
         }
 
         .input-group input[type="file"] {
-            border: none;
+            display: none;
+        }
+
+        .dropzone {
+            width: 100%;
+            padding: 30px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .dropzone:hover {
+            border-color: #3498db;
+            background-color: #f1f8ff;
+        }
+
+        .dropzone p {
+            font-size: 16px;
+            color: #888;
         }
 
         button {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             background-color: #3498db;
             color: #fff;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
         }
 
         button:hover {
             background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Employee Registration</h2>
@@ -113,6 +165,9 @@
             </div>
             <div class="input-group">
                 <label for="workerPhoto">Worker Photo</label>
+                <div class="dropzone" id="dropzone">
+                    <p>Drag and drop an image here or click to select a file</p>
+                </div>
                 <input type="file" id="workerPhoto" name="workerPhoto" accept="image/*" required>
             </div>
             <div class="input-group">
@@ -122,8 +177,20 @@
             <button type="button" onclick="registerEmployee()">Register</button>
         </form>
     </div>
+
     <script>
-        const apiUrl="https://pvtcompany.onrender.com";
+        const apiUrl = "https://pvtcompany.onrender.com";
+
+        document.getElementById('dropzone').addEventListener('click', function () {
+            document.getElementById('workerPhoto').click();
+        });
+
+        document.getElementById('workerPhoto').addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                const dropzoneText = document.querySelector('#dropzone p');
+                dropzoneText.textContent = this.files[0].name;
+            }
+        });
 
         async function registerEmployee() {
             const workerName = document.getElementById('workerName').value;
@@ -164,4 +231,5 @@
         }
     </script>
 </body>
+
 </html>
