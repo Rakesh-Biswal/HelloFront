@@ -7,7 +7,7 @@
     <title>Gate Pass Generation</title>
 
     <style>
-        /* Existing styles */
+        /* Reset and global styles */
         * {
             margin: 0;
             padding: 0;
@@ -19,23 +19,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #f0f0f0;
         }
 
         .container {
-            width: 35%;
+            width: 70%;
+            max-width: 500px; /* Adjust max-width to your preference */
             background-color: #fff;
             padding: 30px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             text-align: center;
-        }
-
-        .container:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease-in-out;
         }
 
         h2 {
@@ -48,8 +44,6 @@
         .input-group {
             margin-bottom: 15px;
             position: relative;
-            animation: slideIn 0.5s ease-in-out;
-            text-align: left;
         }
 
         .input-group label {
@@ -60,7 +54,7 @@
         }
 
         .input-group input {
-            width: 100%;
+            width: calc(100% - 20px); /* Adjust input width to fit container */
             padding: 10px;
             border: 2px solid #ccc;
             border-radius: 5px;
@@ -102,7 +96,7 @@
 
         @keyframes slideIn {
             from {
-                transform: translateY(20px);
+                transform: translateY(-20px);
                 opacity: 0;
             }
 
@@ -113,10 +107,10 @@
         }
 
         .gate-pass-card {
-            display: none;
-            /* Initially hide the gate pass card */
-            width: 700px;
-            height: auto;
+            display: none; /* Initially hide the gate pass card */
+            width: 100%;
+            max-width: 700px;
+            margin-top: 30px;
             border: 2px solid #000;
             border-radius: 10px;
             background-color: #ff5b5b;
@@ -126,6 +120,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            animation: slideIn 0.5s ease-in-out;
         }
 
         .header,
@@ -259,8 +254,8 @@
     </div>
 
     <script>
-
         const apiUrl = "https://pvtcompany.onrender.com";
+
         async function generateGatePass() {
             const name = document.getElementById('employeeName').value;
             const id = document.getElementById('employeeId').value;
@@ -283,7 +278,7 @@
 
                 // Hide the search form and show the gate pass card
                 document.getElementById('search-container').style.display = 'none';
-                document.getElementById('gatePassCard').style.display = 'block';
+                document.getElementById('gatePassCard').style.display = 'flex'; // Display the card
             } catch (error) {
                 alert('Error: ' + error.message);
             }
