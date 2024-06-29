@@ -219,13 +219,14 @@
                     }
                 });
 
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert('Employee registered successfully');
-                } else {
-                    alert('Error: ' + result.message);
+                if (!response.ok) {
+                    throw new Error('Error registering employee');
                 }
+
+                const result = await response.json();
+                alert('Employee registered successfully');
+                document.getElementById('registration-form').reset();
+                document.querySelector('#dropzone p').textContent = 'Drag and drop an image here or click to select a file';
             } catch (error) {
                 console.error('Error:', error);
                 alert('An error occurred while registering the employee.');
