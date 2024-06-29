@@ -153,11 +153,20 @@
             <div class="box box-2">
                 <span class="card-info">New Employee Registration</span>
                 <span class="click-below">Click below and fill the form .</span>
-                <button class="generate-btn">Register</button>
+                <button class="generate-btn" id="reg">Register</button>
             </div>
         </div>
     </section>
 
+
+        <script>
+            document.getElementById(reg).addEventListener("click", ()=>{
+                window.location.href="WorkerRegister.html";
+            });
+        </script>
+
+
 </body>
+
 
 </html>
