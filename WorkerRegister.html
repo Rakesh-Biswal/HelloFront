@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .container {
+            width: 50%;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #3498db;
+        }
+
+        .input-group select {
+            appearance: none;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMTMuNzQzbC01LjgzNi01LjgzNmExIDEgMCAwIDAgLTEuNDE0IDEuNDE0bDYuNTI5IDYuNTI5YTEgMSAwIDAgMCAxLjQxNCAwbDYuNTI5LTYuNTI5YTEgMSAwIDAgMCAtMS40MTQtMS40MTRMMTIgMTMuNzQzeiIgZmlsbD0iIzAwMDAwMCIvPjwvc3ZnPg==') no-repeat right 10px center/15px 15px;
+        }
+
+        .input-group input[type="file"] {
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Employee Registration</h2>
+        <form id="registration-form" autocomplete="off">
+            <div class="input-group">
+                <label for="workerName">Worker Name</label>
+                <input type="text" id="workerName" name="workerName" required>
+            </div>
+            <div class="input-group">
+                <label for="contractor">Working Under Contractor</label>
+                <input type="text" id="contractor" name="contractor" required>
+            </div>
+            <div class="input-group">
+                <label for="guardian">Guardian</label>
+                <input type="text" id="guardian" name="guardian" required>
+            </div>
+            <div class="input-group">
+                <label for="sex">Sex</label>
+                <select id="sex" name="sex" required>
+                    <option value="">Select...</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="workerPhoto">Worker Photo</label>
+                <input type="file" id="workerPhoto" name="workerPhoto" accept="image/*" required>
+            </div>
+            <div class="input-group">
+                <label for="workerAddress">Worker Address</label>
+                <input type="text" id="workerAddress" name="workerAddress" required>
+            </div>
+            <button type="button" onclick="registerEmployee()">Register</button>
+        </form>
+    </div>
+    <script>
+        const apiUrl="https://pvtcompany.onrender.com";
+
+        async function registerEmployee() {
+            const workerName = document.getElementById('workerName').value;
+            const contractor = document.getElementById('contractor').value;
+            const guardian = document.getElementById('guardian').value;
+            const sex = document.getElementById('sex').value;
+            const workerPhoto = document.getElementById('workerPhoto').files[0];
+            const workerAddress = document.getElementById('workerAddress').value;
+
+            const formData = new FormData();
+            formData.append('workerName', workerName);
+            formData.append('contractor', contractor);
+            formData.append('guardian', guardian);
+            formData.append('sex', sex);
+            formData.append('workerPhoto', workerPhoto);
+            formData.append('workerAddress', workerAddress);
+
+            try {
+                const response = await fetch(`${apiUrl}/employee/register`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Employee registered successfully');
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while registering the employee.');
+            }
+        }
+    </script>
+</body>
+</html>
