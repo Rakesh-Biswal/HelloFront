@@ -268,7 +268,7 @@
             const id = document.getElementById('employeeId').value;
 
             try {
-
+                const response = await fetch(`${apiUrl}/employee/${name}/${id}`);
                 if (!response.ok) {
                     throw new Error('Employee not found');
                 }
@@ -281,20 +281,21 @@
                 document.getElementById('guardian').innerText = employee.guardian;
                 document.getElementById('address').innerText = employee.workerAddress;
                 document.getElementById('sex').innerText = employee.sex;
-                document.getElementById('employeePhoto').src = `${apiUrl}/uploads/${employee.workerPhoto}`;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
                 document.getElementById('employeePhoto').src = photoUrl; // Set the employee photo
 
+                // Show the gate pass card
+                document.getElementById('gatePassCard').style.display = 'flex';
 
-                // Hide the search form and show the gate pass card
+                // Hide the search form
                 document.getElementById('search-container').style.display = 'none';
-                document.getElementById('gate-pass-card').style.display = 'flex'; // Display the card
             } catch (error) {
                 alert('Error: ' + error.message);
             }
         }
     </script>
+
 </body>
 
 </html>
