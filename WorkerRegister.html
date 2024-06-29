@@ -18,22 +18,23 @@
         }
 
         .container {
-            width: 40%;
+            width: 35%;
             background-color: #fff;
-            padding: 20px;
+            padding: 30px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            text-align: center;
         }
 
         .container:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
         }
 
         h2 {
-            text-align: center;
             margin-bottom: 20px;
-            font-size: 28px;
+            font-size: 24px;
             color: #333;
             animation: fadeIn 1s ease-in-out;
         }
@@ -42,16 +43,14 @@
             margin-bottom: 15px;
             position: relative;
             animation: slideIn 0.5s ease-in-out;
+            text-align: left;
         }
 
         .input-group label {
-            position: absolute;
-            top: -18px;
-            left: 10px;
-            font-size: 12px;
+            display: block;
+            font-size: 14px;
             color: #3498db;
-            background: #fff;
-            padding: 0 5px;
+            margin-bottom: 5px;
         }
 
         .input-group input,
@@ -97,6 +96,7 @@
         .dropzone p {
             font-size: 14px;
             color: #888;
+            margin: 0;
         }
 
         button {
@@ -120,6 +120,7 @@
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
@@ -130,6 +131,7 @@
                 transform: translateY(20px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -144,15 +146,15 @@
         <form id="registration-form" autocomplete="off">
             <div class="input-group">
                 <label for="workerName">Worker Name</label>
-                <input type="text" id="workerName" name="workerName" required>
+                <input type="text" id="workerName" name="workerName" placeholder="Enter worker name" required>
             </div>
             <div class="input-group">
                 <label for="contractor">Working Under Contractor</label>
-                <input type="text" id="contractor" name="contractor" required>
+                <input type="text" id="contractor" name="contractor" placeholder="Enter contractor name" required>
             </div>
             <div class="input-group">
                 <label for="guardian">Guardian</label>
-                <input type="text" id="guardian" name="guardian" required>
+                <input type="text" id="guardian" name="guardian" placeholder="Enter guardian name" required>
             </div>
             <div class="input-group">
                 <label for="sex">Sex</label>
@@ -172,7 +174,7 @@
             </div>
             <div class="input-group">
                 <label for="workerAddress">Worker Address</label>
-                <input type="text" id="workerAddress" name="workerAddress" required>
+                <input type="text" id="workerAddress" name="workerAddress" placeholder="Enter worker address" required>
             </div>
             <button type="button" onclick="registerEmployee()">Register</button>
         </form>
