@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Registration</title>
     <style>
+        /* Existing styles */
         body {
             display: flex;
             justify-content: center;
@@ -138,7 +138,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h2>Employee Registration</h2>
@@ -146,6 +145,10 @@
             <div class="input-group">
                 <label for="workerName">Worker Name</label>
                 <input type="text" id="workerName" name="workerName" placeholder="Enter worker name" required>
+            </div>
+            <div class="input-group">
+                <label for="employeeId">Employee ID</label>
+                <input type="text" id="employeeId" name="employeeId" placeholder="Enter employee ID" required>
             </div>
             <div class="input-group">
                 <label for="contractor">Working Under Contractor</label>
@@ -195,6 +198,7 @@
 
         async function registerEmployee() {
             const workerName = document.getElementById('workerName').value;
+            const employeeId = document.getElementById('employeeId').value; // New input field
             const contractor = document.getElementById('contractor').value;
             const guardian = document.getElementById('guardian').value;
             const sex = document.getElementById('sex').value;
@@ -203,6 +207,7 @@
 
             const formData = new FormData();
             formData.append('workerName', workerName);
+            formData.append('employeeId', employeeId); // Append new field
             formData.append('contractor', contractor);
             formData.append('guardian', guardian);
             formData.append('sex', sex);
@@ -213,13 +218,13 @@
                 const response = await fetch(`${apiUrl}/employee/register`, {
                     method: 'POST',
                     body: formData,
-
                 });
 
                 const result = await response.json();
 
                 if (response.ok) {
                     alert('Employee registered successfully');
+                    window.location.href = "Dashboard.html";
                     document.getElementById('registration-form').reset(); // Optional: Reset form fields
                 } else {
                     alert('Error: ' + result.message);
@@ -231,5 +236,4 @@
         }
     </script>
 </body>
-
 </html>
