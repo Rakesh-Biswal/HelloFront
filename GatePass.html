@@ -23,45 +23,61 @@
         <div class="spinner" id="spinner"></div>
     </div>
 
-    <div class="gate-pass-card" id="gatePassCard">
-        <div class="header">
-            <div class="header-left">
-                <p class="gate-pass-title">GATE PASS</p>
-                <p class="mil-dri">MIL - <span id="SelMri">DRI</span></p>
+    <div id="TotalCards">
+        <div class="gate-pass-card" id="gatePassCard">
+            <div class="header">
+                <div class="header-left">
+                    <p class="gate-pass-title">GATE PASS</p>
+                    <p class="mil-dri">MIL - <span id="SelMri">DRI</span></p>
+                </div>
+                <div class="header-right">
+                    <p class="mil-dri-number">MIL - DRI / 1075</p>
+                    <p>Valid from: <span class="valid-from">26/04/2024</span></p>
+                    <p>Valid Till: <span class="valid-till">25/05/2024</span></p>
+                </div>
             </div>
-            <div class="header-right">
-                <p class="mil-dri-number">MIL - DRI / 1075</p>
-                <p>Valid from: <span class="valid-from">26/04/2024</span></p>
-                <p>Valid Till: <span class="valid-till">25/05/2024</span></p>
+            <div class="body">
+                <div class="photo">
+                    <img id="employeePhoto" src="" alt="Employee Photo">
+                </div>
+                <div class="details">
+                    <p>Name: <span class="value" id="employeeNameValue"></span></p>
+                    <p>Working under Contractor: <span class="value" id="contractor"></span></p>
+                    <p>Guardian / Spouse: <span class="value" id="guardian"></span></p>
+                    <p>Address: <span class="value" id="address"></span></p>
+                    <p>SEX - <span class="value" id="sex"></span></p>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="signature-card-holder">
+                    <p>Signature of Card Holder</p>
+                </div>
+                <div class="signature-authorised">
+                    <p>Signature of Authorised Signatory</p>
+                </div>
             </div>
         </div>
-        <div class="body">
-            <div class="photo">
-                <img id="employeePhoto" src="" alt="Employee Photo">
-            </div>
-            <div class="details">
-                <p>Name: <span class="value" id="employeeNameValue"></span></p>
-                <p>Working under Contractor: <span class="value" id="contractor"></span></p>
-                <p>Guardian / Spouse: <span class="value" id="guardian"></span></p>
-                <p>Address: <span class="value" id="address"></span></p>
-                <p>SEX - <span class="value" id="sex"></span></p>
-            </div>
-        </div>
-        <div class="footer">
-            <div class="signature-card-holder">
-                <p>Signature of Card Holder</p>
-            </div>
-            <div class="signature-authorised">
-                <p>Signature of Authorised Signatory</p>
-            </div>
-        </div>
+    </div>
+
+    <div class="card" id="terms-conditions-card">
+        <h3>Terms & Conditions</h3>
+        <p class="terms-text">
+            1. Please carry the Identity Card always with you while within the Factory Premises.<br>
+            2. Please show the Card to Security to enter in MIL Factory Premises.<br>
+            3. The Card is NOT TRANSFERABLE.<br>
+            4. This Card is valid for identification purpose only.<br>
+            5. On renewal fresh Identity Card will be issued in case of missing of this Card. Duplicate Gate Pass can be
+            issued on Payment of Rs.100/- to the Issuing Authority.<br>
+            6. MIL reserved the right to restrict the entry of the Card Holder / cancellation of the Card without
+            showing any reason.
+        </p>
     </div>
 
     <script>
         const apiUrl = "https://pvtcompany.onrender.com";
 
         document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById('gatePassCard').style.display = 'none';
+            document.getElementById('TotalCards').style.display = 'none';
         });
 
         async function generateGatePass() {
@@ -98,7 +114,7 @@
                 console.log(photoUrl);
                 document.getElementById('employeePhoto').src = photoUrl;
 
-                document.getElementById('gatePassCard').style.display = 'flex';
+                document.getElementById('TotalCards').style.display = 'flex';
                 document.getElementById('search-container').style.display = 'none';
 
             } catch (error) {

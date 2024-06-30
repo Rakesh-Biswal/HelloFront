@@ -180,3 +180,28 @@ button:hover {
 .signature-authorised p {
     font-size: 14px;
 }
+
+#cards-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 48%;
+    text-align: center;
+}
+
+.terms-text {
+    text-align: left;
+}
+
+#TotalCards{
+    display: flex;
+    gap: 40px;
+}
