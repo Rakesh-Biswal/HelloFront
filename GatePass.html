@@ -20,7 +20,7 @@
             <input type="text" id="employeeId" name="employeeId" required>
         </div>
         <button onclick="generateGatePass()">Generate</button>
-        <div class="spinner" id="spinner" style="display: none;"></div>
+        <div class="spinner" id="spinner"></div>
     </div>
 
     <div id="TotalCards" style="display: none;">
@@ -81,6 +81,10 @@
     <script>
         const apiUrl = "https://pvtcompany.onrender.com";
 
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('TotalCards').style.display = 'none';
+        });
+
         async function generateGatePass() {
             const name = document.getElementById('employeeName').value;
             const id = document.getElementById('employeeId').value;
@@ -113,8 +117,7 @@
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
                 document.getElementById('employeePhoto').src = photoUrl;
 
-                // Display the card after loading employee data
-                document.getElementById('TotalCards').style.display = 'block';
+                document.getElementById('TotalCards').style.display = 'flex';
                 document.getElementById('search-container').style.display = 'none';
 
             } catch (error) {
@@ -154,7 +157,6 @@
                 pdfButton.style.display = 'block';
             }
         }
-
     </script>
 </body>
 
