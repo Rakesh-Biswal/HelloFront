@@ -6,6 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gate Pass Generation</title>
     <link rel="stylesheet" href="GatePass.css">
+    <style>
+        /* Add styles for the print button */
+        #printButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #printButton:hover {
+            background-color: #45a049;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #printSection,
+            #printSection * {
+                visibility: visible;
+            }
+
+            #printSection {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+
+            #pdfButton,
+            #printButton {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -24,56 +65,59 @@
     </div>
 
     <div id="TotalCards" style="display: none;">
-        <div class="gate-pass-card" id="gatePassCard">
-            <div class="header">
-                <div class="header-left">
-                    <p class="gate-pass-title">GATE PASS</p>
-                    <p class="mil-dri">MIL - <span id="SelMri">DRI</span></p>
+        <div id="printSection">
+            <div class="gate-pass-card" id="gatePassCard">
+                <div class="header">
+                    <div class="header-left">
+                        <p class="gate-pass-title">GATE PASS</p>
+                        <p class="mil-dri">MIL - <span id="SelMri">DRI</span></p>
+                    </div>
+                    <div class="header-right">
+                        <p class="mil-dri-number">MIL - DRI / 1075</p>
+                        <p>Valid from: <span class="valid-from">26/04/2024</span></p>
+                        <p>Valid Till: <span class="valid-till">25/05/2024</span></p>
+                    </div>
                 </div>
-                <div class="header-right">
-                    <p class="mil-dri-number">MIL - DRI / 1075</p>
-                    <p>Valid from: <span class="valid-from">26/04/2024</span></p>
-                    <p>Valid Till: <span class="valid-till">25/05/2024</span></p>
+                <div class="body">
+                    <div class="photo">
+                        <img id="employeePhoto" src="" alt="Employee Photo">
+                    </div>
+                    <div class="details">
+                        <p>Name: <span class="value" id="employeeNameValue"></span></p>
+                        <p>Working under Contractor: <span class="value" id="contractor"></span></p>
+                        <p>Guardian / Spouse: <span class="value" id="guardian"></span></p>
+                        <p>Address: <span class="value" id="address"></span></p>
+                        <p>SEX - <span class="value" id="sex"></span></p>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="signature-card-holder">
+                        <p>Signature of Card Holder</p>
+                    </div>
+                    <div class="signature-authorised">
+                        <p>Signature of Authorised Signatory</p>
+                    </div>
                 </div>
             </div>
-            <div class="body">
-                <div class="photo">
-                    <img id="employeePhoto" src="" alt="Employee Photo">
-                </div>
-                <div class="details">
-                    <p>Name: <span class="value" id="employeeNameValue"></span></p>
-                    <p>Working under Contractor: <span class="value" id="contractor"></span></p>
-                    <p>Guardian / Spouse: <span class="value" id="guardian"></span></p>
-                    <p>Address: <span class="value" id="address"></span></p>
-                    <p>SEX - <span class="value" id="sex"></span></p>
-                </div>
-            </div>
-            <div class="footer">
-                <div class="signature-card-holder">
-                    <p>Signature of Card Holder</p>
-                </div>
-                <div class="signature-authorised">
-                    <p>Signature of Authorised Signatory</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="card" id="terms-conditions-card">
-            <h3>Terms & Conditions</h3>
-            <p class="terms-text">
-                1. Please carry the Identity Card always with you while within the Factory Premises.<br>
-                2. Please show the Card to Security to enter in MIL Factory Premises.<br>
-                3. The Card is NOT TRANSFERABLE.<br>
-                4. This Card is valid for identification purpose only.<br>
-                5. On renewal fresh Identity Card will be issued in case of missing of this Card. Duplicate Gate Pass
-                can be
-                issued on Payment of Rs.100/- to the Issuing Authority.<br>
-                6. MIL reserved the right to restrict the entry of the Card Holder / cancellation of the Card without
-                showing any reason.
-            </p>
+            <div class="card" id="terms-conditions-card">
+                <h3>Terms & Conditions</h3>
+                <p class="terms-text">
+                    1. Please carry the Identity Card always with you while within the Factory Premises.<br>
+                    2. Please show the Card to Security to enter in MIL Factory Premises.<br>
+                    3. The Card is NOT TRANSFERABLE.<br>
+                    4. This Card is valid for identification purpose only.<br>
+                    5. On renewal fresh Identity Card will be issued in case of missing of this Card. Duplicate Gate Pass
+                    can be
+                    issued on Payment of Rs.100/- to the Issuing Authority.<br>
+                    6. MIL reserved the right to restrict the entry of the Card Holder / cancellation of the Card without
+                    showing any reason.
+                </p>
+            </div>
         </div>
 
         <button id="pdfButton" onclick="convertToPDF()">Convert to PDF</button>
+        <button id="printButton" onclick="printGatePass()">Print</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -107,9 +151,6 @@
 
                 const employee = await response.json();
 
-                const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
-                document.getElementById('employeePhoto').src = photoUrl;
-
                 document.getElementById('employeeNameValue').innerText = employee.workerName;
                 document.getElementById('contractor').innerText = employee.contractor;
                 document.getElementById('guardian').innerText = employee.guardian;
@@ -117,6 +158,8 @@
                 document.getElementById('sex').innerText = employee.sex;
                 document.getElementById('SelMri').innerText = employee.mil;
 
+                const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
+                document.getElementById('employeePhoto').src = photoUrl;
 
                 document.getElementById('TotalCards').style.display = 'flex';
                 document.getElementById('search-container').style.display = 'none';
@@ -157,6 +200,10 @@
                 // Ensure the button is visible again in case of error
                 pdfButton.style.display = 'block';
             }
+        }
+
+        function printGatePass() {
+            window.print();
         }
     </script>
 </body>
