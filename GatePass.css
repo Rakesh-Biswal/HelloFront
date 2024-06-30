@@ -211,3 +211,24 @@ button:hover {
     column-gap:40px;
 }
 
+/* Add any additional styling for the new PDF button if necessary */
+.pdf-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pdf-button-container button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #3498db;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.pdf-button-container button:hover {
+    background-color: #2980b9;
+    transform: scale(1.03);
+}

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gate Pass Generation</title>
     <link rel="stylesheet" href="GatePass.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
 </head>
 
 <body>
@@ -24,7 +26,7 @@
     </div>
 
     <div id="TotalCards">
-        
+
         <div class="gate-pass-card" id="gatePassCard">
             <div class="header">
                 <div class="header-left">
@@ -44,7 +46,7 @@
                 <div class="details">
                     <p>Name: <span class="value" id="employeeNameValue"></span></p>
                     <p>Working under Contractor: <span class="value" id="contractor"></span></p>
-                    <p>Guardian / Spouse: <span class="value" id="guardian"></span></p>
+                    <p>Guardian / Spouse: <span class="value" id="guardian"></span>
                     <p>Address: <span class="value" id="address"></span></p>
                     <p>SEX - <span class="value" id="sex"></span></p>
                 </div>
@@ -74,10 +76,11 @@
             </p>
         </div>
 
+        <div class="pdf-button-container">
+            <button onclick="convertToPDF()">Convert to PDF</button>
+        </div>
 
     </div>
-
-
 
     <script>
         const apiUrl = "https://pvtcompany.onrender.com";
@@ -104,7 +107,6 @@
 
                 if (!response.ok) {
                     throw new Error('Employee not found');
-                    alert("Employee not found");
                 }
 
                 const employee = await response.json();
@@ -117,7 +119,6 @@
                 document.getElementById('SelMri').innerText = employee.mil;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
-                console.log(photoUrl);
                 document.getElementById('employeePhoto').src = photoUrl;
 
                 document.getElementById('TotalCards').style.display = 'flex';
@@ -127,6 +128,31 @@
                 spinner.style.display = 'none';
                 alert('Error: ' + error.message);
             }
+        }
+
+        function convertToPDF() {
+            const pdf = new jsPDF();
+
+            const gatePassCard = document.getElementById('gatePassCard');
+            const termsConditionsCard = document.getElementById('terms-conditions-card');
+
+            html2canvas(gatePassCard, { scale: 2 })
+                .then(canvas1 => {
+                    const imageData1 = canvas1.toDataURL('image/png');
+                    pdf.addImage(imageData1, 'PNG', 10, 10, 180, 120);
+
+                    return html2canvas(termsConditionsCard, { scale: 2 });
+                })
+                .then(canvas2 => {
+                    const imageData2 = canvas2.toDataURL('image/png');
+                    pdf.addPage();
+                    pdf.addImage(imageData2, 'PNG', 10, 10, 180, 120);
+
+                    pdf.save('gate_pass.pdf');
+                })
+                .catch(error => {
+                    console.error('Error creating PDF:', error);
+                });
         }
     </script>
 </body>
