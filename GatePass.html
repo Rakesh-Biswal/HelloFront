@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gate Pass Generation</title>
     <style>
+        /* Reset and global styles */
         * {
             margin: 0;
             padding: 0;
@@ -89,6 +90,21 @@
                 opacity: 1;
             }
         }
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto;
+            border: 5px solid #ccc;
+            border-top-color: #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
         .gate-pass-card {
             display: none;
             width: 100%;
@@ -100,7 +116,6 @@
             padding: 30px;
             color: #000;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
             flex-direction: column;
             gap: 20px;
             animation: slideIn 0.5s ease-in-out;
@@ -172,47 +187,6 @@
         .signature-authorised p {
             font-size: 14px;
         }
-        .spinner {
-            display: none;
-            width: 50px;
-            height: 50px;
-            margin: 20px auto;
-            background-color: #3498db;
-            position: relative;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        .triangle {
-            width: 0;
-            height: 0;
-            border-left: 25px solid transparent;
-            border-right: 25px solid transparent;
-            border-bottom: 50px solid #3498db;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        @media (max-width: 768px) {
-            .container {
-                width: 90%;
-                padding: 20px;
-            }
-            .input-group input {
-                padding: 10px;
-            }
-            button {
-                padding: 10px;
-                font-size: 16px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -227,9 +201,7 @@
             <input type="text" id="employeeId" name="employeeId" required>
         </div>
         <button onclick="generateGatePass()">Generate</button>
-        <div class="spinner" id="spinner">
-            <div class="triangle"></div>
-        </div>
+        <div class="spinner" id="spinner"></div>
     </div>
 
     <div class="gate-pass-card" id="gatePassCard">
@@ -286,32 +258,26 @@
             spinner.style.display = 'block';
 
             try {
-                const response = await fetch(`${apiUrl}/api/employee/getEmployee`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ name, id }),
-                });
-
-                const data = await response.json();
+                const response = await fetch(`${apiUrl}/employee/${name}/${id}`);
                 spinner.style.display = 'none';
 
-                if (data.success) {
-                    // Fill the gate pass card with employee data
-                    document.getElementById('employeeNameValue').textContent = data.employee.name;
-                    document.getElementById('contractor').textContent = data.employee.contractor;
-                    document.getElementById('guardian').textContent = data.employee.guardian;
-                    document.getElementById('address').textContent = data.employee.address;
-                    document.getElementById('sex').textContent = data.employee.sex;
-                    document.getElementById('employeePhoto').src = data.employee.photo;
-
-                    // Hide the input form and show the gate pass card
-                    document.getElementById('search-container').style.display = 'none';
-                    document.getElementById('gatePassCard').style.display = 'flex';
-                } else {
-                    alert('Employee not found.');
+                if (!response.ok) {
+                    throw new Error('Employee not found');
+                    alert("Employee not found");
                 }
+
+                const employee = await response.json();
+
+                document.getElementById('employeeNameValue').innerText = employee.workerName;
+                document.getElementById('contractor').innerText = employee.contractor;
+                document.getElementById('guardian').innerText = employee.guardian;
+                document.getElementById('address').innerText = employee.workerAddress;
+                document.getElementById('sex').innerText = employee.sex;
+
+                const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
+                document.getElementById('employeePhoto').src = photoUrl;
+
+                document.getElementById('gatePassCard').style.display = 'flex';
             } catch (error) {
                 spinner.style.display = 'none';
                 alert('Error: ' + error.message);
