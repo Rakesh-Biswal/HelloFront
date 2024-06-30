@@ -208,7 +208,7 @@
         <div class="header">
             <div class="header-left">
                 <p class="gate-pass-title">GATE PASS</p>
-                <p class="mil-dri">MIL - DRI</p>
+                <p class="mil-dri">MIL - <span id="SelMri">DRI</span></p>
             </div>
             <div class="header-right">
                 <p class="mil-dri-number">MIL - DRI / 1075</p>
@@ -273,6 +273,7 @@
                 document.getElementById('guardian').innerText = employee.guardian;
                 document.getElementById('address').innerText = employee.workerAddress;
                 document.getElementById('sex').innerText = employee.sex;
+                document.getElementById('SelMri').innerText = employee.mil;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
                 console.log(photoUrl);
