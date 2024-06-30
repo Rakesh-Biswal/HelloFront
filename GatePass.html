@@ -23,7 +23,7 @@
         <div class="spinner" id="spinner"></div>
     </div>
 
-    <div id="TotalCards" style="display: none;">
+    <div id="TotalCards">
         <div class="gate-pass-card" id="gatePassCard">
             <div class="header">
                 <div class="header-left">
@@ -115,10 +115,17 @@
                 document.getElementById('SelMri').innerText = employee.mil;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
-                document.getElementById('employeePhoto').src = photoUrl;
-
-                document.getElementById('TotalCards').style.display = 'flex';
-                document.getElementById('search-container').style.display = 'none';
+                const employeePhoto = document.getElementById('employeePhoto');
+                
+                // Clear previous src to ensure onload triggers
+                employeePhoto.src = '';
+                employeePhoto.onload = async function() {
+                    // After image is fully loaded, display the cards
+                    document.getElementById('TotalCards').style.display = 'flex';
+                    document.getElementById('search-container').style.display = 'none';
+                };
+                
+                employeePhoto.src = photoUrl; // Set the src after setting onload
 
             } catch (error) {
                 spinner.style.display = 'none';
@@ -131,10 +138,6 @@
             const totalCards = document.getElementById('TotalCards');
             const employeeName = document.getElementById('employeeNameValue').innerText;
 
-            // Hide the button temporarily before capturing the HTML
-            const pdfButton = document.getElementById('pdfButton');
-            pdfButton.style.display = 'none';
-
             try {
                 const canvas = await html2canvas(totalCards);
                 const imgData = canvas.toDataURL('image/png');
@@ -146,15 +149,9 @@
 
                 pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
                 pdf.save(`${employeeName}_GatePass.pdf`);
-
-                // Show the button again after capturing the HTML
-                pdfButton.style.display = 'block';
             } catch (error) {
                 console.error('Error generating PDF:', error);
                 alert('Error generating PDF.');
-
-                // Ensure the button is visible again in case of error
-                pdfButton.style.display = 'block';
             }
         }
     </script>
