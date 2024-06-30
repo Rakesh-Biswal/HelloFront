@@ -180,7 +180,6 @@ button:hover {
     font-size: 14px;
 }
 
-
 #terms-conditions-card {
     width: 100%;
     max-width: 700px;
@@ -208,46 +207,23 @@ button:hover {
 
 #TotalCards{
     display: flex;
-    column-gap:40px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Add some space between the cards and the button */
 }
 
-/* Add any additional styling for the new PDF button if necessary */
-.pdf-button-container {
-    text-align: center;
+#convertToPdfButton {
     margin-top: 20px;
-}
-
-.pdf-button-container button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    background-color: #3498db;
-    color: #fff;
+    padding: 10px 20px;
+    background-color: #27ae60;
+    color: white;
     font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
-
-.pdf-button-container button:hover {
-    background-color: #2980b9;
-    transform: scale(1.03);
-}
-
-#convertToPDF {
-    width: 200px;
-    padding: 15px;
-    margin-top: 20px;
     border: none;
-    border-radius: 8px;
-    background-color: #3498db;
-    color: #fff;
-    font-size: 18px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
-
-#convertToPDF:hover {
-    background-color: #2980b9;
-    transform: scale(1.03);
+#convertToPdfButton:hover {
+    background-color: #219150;
+    transform: scale(1.05);
 }
-

@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gate Pass Generation</title>
     <link rel="stylesheet" href="GatePass.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -67,14 +65,19 @@
                 2. Please show the Card to Security to enter in MIL Factory Premises.<br>
                 3. The Card is NOT TRANSFERABLE.<br>
                 4. This Card is valid for identification purpose only.<br>
-                5. On renewal fresh Identity Card will be issued in case of missing of this Card. Duplicate Gate Pass can be issued on Payment of Rs.100/- to the Issuing Authority.<br>
-                6. MIL reserved the right to restrict the entry of the Card Holder / cancellation of the Card without showing any reason.
+                5. On renewal fresh Identity Card will be issued in case of missing of this Card. Duplicate Gate Pass
+                can be
+                issued on Payment of Rs.100/- to the Issuing Authority.<br>
+                6. MIL reserved the right to restrict the entry of the Card Holder / cancellation of the Card without
+                showing any reason.
             </p>
         </div>
 
-        <button id="convertToPDF" onclick="convertToPDF()">Convert to PDF</button>
+        <button id="pdfButton" onclick="convertToPDF()">Convert to PDF</button>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         const apiUrl = "https://pvtcompany.onrender.com";
 
@@ -100,7 +103,6 @@
 
                 if (!response.ok) {
                     throw new Error('Employee not found');
-                    alert("Employee not found");
                 }
 
                 const employee = await response.json();
@@ -127,26 +129,24 @@
 
         async function convertToPDF() {
             const { jsPDF } = window.jspdf;
-
-            const pdf = new jsPDF('p', 'pt', 'a4');
-
-            const gatePassCard = document.getElementById('gatePassCard');
-            const termsConditionsCard = document.getElementById('terms-conditions-card');
-
+            const totalCards = document.getElementById('TotalCards');
             const employeeName = document.getElementById('employeeNameValue').innerText;
 
-            await html2canvas(gatePassCard).then(canvas => {
+            try {
+                const canvas = await html2canvas(totalCards);
                 const imgData = canvas.toDataURL('image/png');
-                pdf.addImage(imgData, 'PNG', 10, 10, 585, 0);
-            });
+                const pdf = new jsPDF('p', 'mm', 'a4');
 
-            await html2canvas(termsConditionsCard).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 10, 10, 585, 0);
-            });
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-            pdf.save(`gate_pass_${employeeName}.pdf`);
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save(`${employeeName}_GatePass.pdf`);
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert('Error generating PDF.');
+            }
         }
     </script>
 </body>
