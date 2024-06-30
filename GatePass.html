@@ -116,7 +116,6 @@
             </div>
         </div>
 
-        <button id="pdfButton" onclick="convertToPDF()">Convert to PDF</button>
         <button id="printButton" onclick="printGatePass()">Print</button>
     </div>
 
@@ -167,38 +166,6 @@
             } catch (error) {
                 spinner.style.display = 'none';
                 alert('Error: ' + error.message);
-            }
-        }
-
-        async function convertToPDF() {
-            const { jsPDF } = window.jspdf;
-            const totalCards = document.getElementById('TotalCards');
-            const employeeName = document.getElementById('employeeNameValue').innerText;
-
-            // Hide the button temporarily before capturing the HTML
-            const pdfButton = document.getElementById('pdfButton');
-            pdfButton.style.display = 'none';
-
-            try {
-                const canvas = await html2canvas(totalCards);
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF('p', 'mm', 'a4');
-
-                const imgProps = pdf.getImageProperties(imgData);
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                pdf.save(`${employeeName}_GatePass.pdf`);
-
-                // Show the button again after capturing the HTML
-                pdfButton.style.display = 'block';
-            } catch (error) {
-                console.error('Error generating PDF:', error);
-                alert('Error generating PDF.');
-
-                // Ensure the button is visible again in case of error
-                pdfButton.style.display = 'block';
             }
         }
 
