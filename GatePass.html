@@ -107,6 +107,9 @@
 
                 const employee = await response.json();
 
+                const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
+                document.getElementById('employeePhoto').src = photoUrl;
+
                 document.getElementById('employeeNameValue').innerText = employee.workerName;
                 document.getElementById('contractor').innerText = employee.contractor;
                 document.getElementById('guardian').innerText = employee.guardian;
@@ -114,8 +117,6 @@
                 document.getElementById('sex').innerText = employee.sex;
                 document.getElementById('SelMri').innerText = employee.mil;
 
-                const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
-                document.getElementById('employeePhoto').src = photoUrl;
 
                 document.getElementById('TotalCards').style.display = 'flex';
                 document.getElementById('search-container').style.display = 'none';
