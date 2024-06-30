@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gate Pass Generation</title>
     <link rel="stylesheet" href="GatePass.css">
-    
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <div class="container" id="search-container">
         <h2>Generate Gate Pass</h2>
         <div class="input-group">
@@ -27,7 +25,6 @@
     </div>
 
     <div id="TotalCards">
-
         <div class="gate-pass-card" id="gatePassCard">
             <div class="header">
                 <div class="header-left">
@@ -47,7 +44,7 @@
                 <div class="details">
                     <p>Name: <span class="value" id="employeeNameValue"></span></p>
                     <p>Working under Contractor: <span class="value" id="contractor"></span></p>
-                    <p>Guardian / Spouse: <span class="value" id="guardian"></span>
+                    <p>Guardian / Spouse: <span class="value" id="guardian"></span></p>
                     <p>Address: <span class="value" id="address"></span></p>
                     <p>SEX - <span class="value" id="sex"></span></p>
                 </div>
@@ -69,18 +66,13 @@
                 2. Please show the Card to Security to enter in MIL Factory Premises.<br>
                 3. The Card is NOT TRANSFERABLE.<br>
                 4. This Card is valid for identification purpose only.<br>
-                5. On renewal fresh Identity Card will be issued in case of missing of this Card. Duplicate Gate Pass
-                can be
+                5. On renewal fresh Identity Card will be issued in case of missing of this Card. Duplicate Gate Pass can be
                 issued on Payment of Rs.100/- to the Issuing Authority.<br>
-                6. MIL reserved the right to restrict the entry of the Card Holder / cancellation of the Card without
-                showing any reason.
+                6. MIL reserved the right to restrict the entry of the Card Holder / cancellation of the Card without showing any reason.
             </p>
         </div>
 
-        <div class="pdf-button-container">
-            <button onclick="convertToPDF()">Convert to PDF</button>
-        </div>
-
+        <button id="convertToPDF" onclick="convertToPDF()">Convert to PDF</button>
     </div>
 
     <script>
@@ -108,6 +100,7 @@
 
                 if (!response.ok) {
                     throw new Error('Employee not found');
+                    alert("Employee not found");
                 }
 
                 const employee = await response.json();
@@ -120,6 +113,7 @@
                 document.getElementById('SelMri').innerText = employee.mil;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
+                console.log(photoUrl);
                 document.getElementById('employeePhoto').src = photoUrl;
 
                 document.getElementById('TotalCards').style.display = 'flex';
@@ -131,29 +125,28 @@
             }
         }
 
-        function convertToPDF() {
-            const pdf = new jsPDF();
+        async function convertToPDF() {
+            const { jsPDF } = window.jspdf;
+
+            const pdf = new jsPDF('p', 'pt', 'a4');
 
             const gatePassCard = document.getElementById('gatePassCard');
             const termsConditionsCard = document.getElementById('terms-conditions-card');
 
-            html2canvas(gatePassCard, { scale: 2 })
-                .then(canvas1 => {
-                    const imageData1 = canvas1.toDataURL('image/png');
-                    pdf.addImage(imageData1, 'PNG', 10, 10, 180, 120);
+            const employeeName = document.getElementById('employeeNameValue').innerText;
 
-                    return html2canvas(termsConditionsCard, { scale: 2 });
-                })
-                .then(canvas2 => {
-                    const imageData2 = canvas2.toDataURL('image/png');
-                    pdf.addPage();
-                    pdf.addImage(imageData2, 'PNG', 10, 10, 180, 120);
+            await html2canvas(gatePassCard).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                pdf.addImage(imgData, 'PNG', 10, 10, 585, 0);
+            });
 
-                    pdf.save('gate_pass.pdf');
-                })
-                .catch(error => {
-                    console.error('Error creating PDF:', error);
-                });
+            await html2canvas(termsConditionsCard).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 10, 10, 585, 0);
+            });
+
+            pdf.save(`gate_pass_${employeeName}.pdf`);
         }
     </script>
 </body>
