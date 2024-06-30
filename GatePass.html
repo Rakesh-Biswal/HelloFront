@@ -23,7 +23,7 @@
         <div class="spinner" id="spinner"></div>
     </div>
 
-    <div id="TotalCards">
+    <div id="TotalCards" style="display: none;">
         <div class="gate-pass-card" id="gatePassCard">
             <div class="header">
                 <div class="header-left">
@@ -115,7 +115,6 @@
                 document.getElementById('SelMri').innerText = employee.mil;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
-                console.log(photoUrl);
                 document.getElementById('employeePhoto').src = photoUrl;
 
                 document.getElementById('TotalCards').style.display = 'flex';
@@ -132,6 +131,10 @@
             const totalCards = document.getElementById('TotalCards');
             const employeeName = document.getElementById('employeeNameValue').innerText;
 
+            // Hide the button temporarily before capturing the HTML
+            const pdfButton = document.getElementById('pdfButton');
+            pdfButton.style.display = 'none';
+
             try {
                 const canvas = await html2canvas(totalCards);
                 const imgData = canvas.toDataURL('image/png');
@@ -143,9 +146,15 @@
 
                 pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
                 pdf.save(`${employeeName}_GatePass.pdf`);
+
+                // Show the button again after capturing the HTML
+                pdfButton.style.display = 'block';
             } catch (error) {
                 console.error('Error generating PDF:', error);
                 alert('Error generating PDF.');
+
+                // Ensure the button is visible again in case of error
+                pdfButton.style.display = 'block';
             }
         }
     </script>
