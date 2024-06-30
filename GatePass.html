@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gate Pass Generation</title>
-    <link rel="stylesheet" href="GatePass.css">
+    <style>
+        /* Your CSS styles for Gate Pass */
+    </style>
 </head>
 
 <body>
@@ -20,7 +22,7 @@
             <input type="text" id="employeeId" name="employeeId" required>
         </div>
         <button onclick="generateGatePass()">Generate</button>
-        <div class="spinner" id="spinner"></div>
+        <div class="spinner" id="spinner" style="display: none;"></div>
     </div>
 
     <div id="TotalCards" style="display: none;">
@@ -81,10 +83,6 @@
     <script>
         const apiUrl = "https://pvtcompany.onrender.com";
 
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById('TotalCards').style.display = 'none';
-        });
-
         async function generateGatePass() {
             const name = document.getElementById('employeeName').value;
             const id = document.getElementById('employeeId').value;
@@ -115,14 +113,11 @@
                 document.getElementById('SelMri').innerText = employee.mil;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
+                document.getElementById('employeePhoto').src = photoUrl;
 
-                // Ensure the image loads correctly before showing the card
-                const img = document.getElementById('employeePhoto');
-                img.onload = function () {
-                    document.getElementById('TotalCards').style.display = 'block';
-                    document.getElementById('search-container').style.display = 'none';
-                };
-                img.src = photoUrl;
+                // Display the card after loading employee data
+                document.getElementById('TotalCards').style.display = 'block';
+                document.getElementById('search-container').style.display = 'none';
 
             } catch (error) {
                 spinner.style.display = 'none';
