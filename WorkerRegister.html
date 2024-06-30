@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Registration</title>
     <link rel="stylesheet" href="WorkerReg.css">
 </head>
+
 <body>
     <div class="container">
         <h2>Employee Registration</h2>
@@ -79,6 +81,11 @@
         });
 
         async function registerEmployee() {
+
+            const spinner = document.getElementById('spinner');
+            spinner.classList.add('active');
+            overlay.style.display = 'block';
+
             const workerName = document.getElementById('workerName').value;
             const employeeId = document.getElementById('employeeId').value; // New input field
             const mil = document.getElementById('mil').value;
@@ -107,17 +114,26 @@
                 const result = await response.json();
 
                 if (response.ok) {
+                    spinner.classList.remove('active');
+                    overlay.style.display = 'none';
+
                     alert('Employee registered successfully');
                     window.location.href = "Dashboard.html";
                     document.getElementById('registration-form').reset(); // Optional: Reset form fields
                 } else {
+                    spinner.classList.remove('active');
+                    overlay.style.display = 'none';
+
                     alert('Error: ' + result.message);
                 }
             } catch (error) {
+                spinner.classList.remove('active');
+                overlay.style.display = 'none';
                 console.error('Error:', error);
                 alert('An error occurred while registering the employee.');
             }
         }
     </script>
 </body>
+
 </html>

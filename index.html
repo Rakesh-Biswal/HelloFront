@@ -110,6 +110,7 @@
             const password = document.getElementById('password').value;
             const spinner = document.getElementById('spinner');
             spinner.style.display = 'block';
+            overlay.style.display = 'block'; // Show overlay
 
             try {
                 const response = await fetch(`${apiUrl}/admin/login`, {
@@ -124,18 +125,23 @@
 
                 if (response.ok) {
                     spinner.style.display = 'none';
+                    overlay.style.display = 'none';
                     window.location.href = 'Dashboard.html';
                     // Handle successful login (e.g., redirect to admin dashboard)
                 } else {
                     spinner.style.display = 'none';
+                    overlay.style.display = 'none';
                     alert('Login failed: ' + result.message);
                     // Handle login failure
                 }
             } catch (error) {
+                spinner.style.display = 'none';
+                    overlay.style.display = 'none';
                 console.error('Error during login:', error);
                 alert('An error occurred during login.');
             } finally {
                 spinner.style.display = 'none';
+                overlay.style.display = 'none';
             }
         }
     </script>
