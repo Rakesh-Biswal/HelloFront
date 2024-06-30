@@ -115,11 +115,14 @@
                 document.getElementById('SelMri').innerText = employee.mil;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
-                document.getElementById('employeePhoto').onload = function () {
-                    document.getElementById('TotalCards').style.display = 'flex';
+
+                // Ensure the image loads correctly before showing the card
+                const img = document.getElementById('employeePhoto');
+                img.onload = function () {
+                    document.getElementById('TotalCards').style.display = 'block';
                     document.getElementById('search-container').style.display = 'none';
                 };
-                document.getElementById('employeePhoto').src = photoUrl;
+                img.src = photoUrl;
 
             } catch (error) {
                 spinner.style.display = 'none';
