@@ -126,37 +126,38 @@
             }
         }
 
+        // Function to convert TotalCards section to PDF
         async function convertToPDF() {
-            const { jsPDF } = window.jspdf;
             const totalCards = document.getElementById('TotalCards');
             const employeeName = document.getElementById('employeeNameValue').innerText;
-
-            // Hide the button temporarily before capturing the HTML
-            const pdfButton = document.getElementById('pdfButton');
-            pdfButton.style.display = 'none';
+            const photoUrl = document.getElementById('employeePhoto').src;
 
             try {
-                const canvas = await html2canvas(totalCards);
-                const imgData = canvas.toDataURL('image/png');
+                // Initialize jsPDF
                 const pdf = new jsPDF('p', 'mm', 'a4');
 
-                const imgProps = pdf.getImageProperties(imgData);
+                // Add Gate Pass Card to PDF
+                const gatePassCard = document.getElementById('gatePassCard');
+                const cardDataUrl = await html2canvas(gatePassCard).then(canvas => canvas.toDataURL('image/png'));
+                const imgProps = pdf.getImageProperties(cardDataUrl);
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                pdf.addImage(cardDataUrl, 'PNG', 10, 10, pdfWidth - 20, pdfHeight);
 
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                // Add Terms & Conditions Card to PDF
+                const termsCard = document.getElementById('terms-conditions-card');
+                const termsDataUrl = await html2canvas(termsCard).then(canvas => canvas.toDataURL('image/png'));
+                pdf.addPage();
+                pdf.addImage(termsDataUrl, 'PNG', 10, 10, pdfWidth - 20);
+
+                // Save PDF with employee name
                 pdf.save(`${employeeName}_GatePass.pdf`);
-
-                // Show the button again after capturing the HTML
-                pdfButton.style.display = 'block';
             } catch (error) {
                 console.error('Error generating PDF:', error);
                 alert('Error generating PDF.');
-
-                // Ensure the button is visible again in case of error
-                pdfButton.style.display = 'block';
             }
         }
+
     </script>
 </body>
 
