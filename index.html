@@ -18,6 +18,24 @@
             height: 50px;
             background-color: #3498db;
             animation: spinner 1s infinite;
+            z-index: 1000;
+            /* Ensure spinner is above everything else */
+        }
+
+        /* Blurred overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent black */
+            z-index: 999;
+            /* Below spinner but above other content */
+            backdrop-filter: blur(5px);
+            /* Apply blur effect to the overlay */
         }
 
         @keyframes spinner {
@@ -67,10 +85,11 @@
             </form>
         </div>
         <div id="spinner" class="spinner"></div>
+        <div id="overlay" class="overlay"></div>
     </div>
     <script>
 
-        const apiUrl="https://pvtcompany.onrender.com";
+        const apiUrl = "https://pvtcompany.onrender.com";
         document.addEventListener('DOMContentLoaded', function () {
             // Disable autocomplete on the form and its fields
             const form = document.getElementById('login-form');
@@ -92,7 +111,7 @@
             const spinner = document.getElementById('spinner');
             spinner.style.display = 'block';
 
-            try { 
+            try {
                 const response = await fetch(`${apiUrl}/admin/login`, {
                     method: 'POST',
                     headers: {
@@ -105,7 +124,7 @@
 
                 if (response.ok) {
                     spinner.style.display = 'none';
-                    window.location.href='Dashboard.html';
+                    window.location.href = 'Dashboard.html';
                     // Handle successful login (e.g., redirect to admin dashboard)
                 } else {
                     spinner.style.display = 'none';
