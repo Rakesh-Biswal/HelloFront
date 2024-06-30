@@ -7,6 +7,7 @@
     <title>Gate Pass Generation</title>
     <link rel="stylesheet" href="GatePass.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -77,7 +78,6 @@
         <button id="pdfButton" onclick="convertToPDF()">Convert to PDF</button>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         const apiUrl = "https://pvtcompany.onrender.com";
 
@@ -128,7 +128,6 @@
 
         async function convertToPDF() {
             const employeeName = document.getElementById('employeeNameValue').innerText;
-            const photoUrl = document.getElementById('employeePhoto').src;
 
             try {
                 // Initialize jsPDF
@@ -137,15 +136,20 @@
 
                 // Add Gate Pass Card to PDF
                 const gatePassCard = document.getElementById('gatePassCard');
-                const cardDataUrl = await html2canvas(gatePassCard).then(canvas => canvas.toDataURL('image/png'));
+                const cardCanvas = await html2canvas(gatePassCard);
+                const cardDataUrl = cardCanvas.toDataURL('image/png');
                 const imgProps = pdf.getImageProperties(cardDataUrl);
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                // Ensure the height and width are valid
                 pdf.addImage(cardDataUrl, 'PNG', 10, 10, pdfWidth - 20, pdfHeight);
 
                 // Add Terms & Conditions Card to PDF
                 const termsCard = document.getElementById('terms-conditions-card');
-                const termsDataUrl = await html2canvas(termsCard).then(canvas => canvas.toDataURL('image/png'));
+                const termsCanvas = await html2canvas(termsCard);
+                const termsDataUrl = termsCanvas.toDataURL('image/png');
+
                 pdf.addPage();
                 pdf.addImage(termsDataUrl, 'PNG', 10, 10, pdfWidth - 20);
 
@@ -156,7 +160,6 @@
                 alert('Error generating PDF.');
             }
         }
-
     </script>
 </body>
 
