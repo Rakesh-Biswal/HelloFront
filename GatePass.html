@@ -67,11 +67,8 @@
                 2. Please show the Card to Security to enter in MIL Factory Premises.<br>
                 3. The Card is NOT TRANSFERABLE.<br>
                 4. This Card is valid for identification purpose only.<br>
-                5. On renewal fresh Identity Card will be issued in case of missing of this Card. Duplicate Gate Pass
-                can be
-                issued on Payment of Rs.100/- to the Issuing Authority.<br>
-                6. MIL reserved the right to restrict the entry of the Card Holder / cancellation of the Card without
-                showing any reason.
+                5. On renewal fresh Identity Card will be issued in case of missing of this Card. Duplicate Gate Pass can be issued on Payment of Rs.100/- to the Issuing Authority.<br>
+                6. MIL reserved the right to restrict the entry of the Card Holder / cancellation of the Card without showing any reason.
             </p>
         </div>
 
@@ -115,10 +112,17 @@
                 document.getElementById('SelMri').innerText = employee.mil;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
-                document.getElementById('employeePhoto').src = photoUrl;
+                const img = document.getElementById('employeePhoto');
+                img.src = photoUrl;
 
-                document.getElementById('TotalCards').style.display = 'flex';
-                document.getElementById('search-container').style.display = 'none';
+                img.onload = () => {
+                    document.getElementById('TotalCards').style.display = 'flex';
+                    document.getElementById('search-container').style.display = 'none';
+                };
+
+                img.onerror = () => {
+                    alert('Error loading employee photo');
+                };
 
             } catch (error) {
                 spinner.style.display = 'none';
@@ -142,14 +146,12 @@
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-                // Ensure the height and width are valid
                 pdf.addImage(cardDataUrl, 'PNG', 10, 10, pdfWidth - 20, pdfHeight);
 
                 // Add Terms & Conditions Card to PDF
                 const termsCard = document.getElementById('terms-conditions-card');
                 const termsCanvas = await html2canvas(termsCard);
                 const termsDataUrl = termsCanvas.toDataURL('image/png');
-
                 pdf.addPage();
                 pdf.addImage(termsDataUrl, 'PNG', 10, 10, pdfWidth - 20);
 
