@@ -278,6 +278,8 @@
                 document.getElementById('employeePhoto').src = photoUrl;
 
                 document.getElementById('gatePassCard').style.display = 'flex';
+                document.getElementById('search-container').style.display = 'none';
+
             } catch (error) {
                 spinner.style.display = 'none';
                 alert('Error: ' + error.message);
