@@ -77,7 +77,6 @@
         <button id="pdfButton" onclick="convertToPDF()">Convert to PDF</button>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         const apiUrl = "https://pvtcompany.onrender.com";
@@ -127,14 +126,13 @@
             }
         }
 
-        // Function to convert TotalCards section to PDF
         async function convertToPDF() {
-            const totalCards = document.getElementById('TotalCards');
             const employeeName = document.getElementById('employeeNameValue').innerText;
             const photoUrl = document.getElementById('employeePhoto').src;
 
             try {
                 // Initialize jsPDF
+                const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF('p', 'mm', 'a4');
 
                 // Add Gate Pass Card to PDF
