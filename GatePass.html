@@ -275,6 +275,7 @@
                 document.getElementById('sex').innerText = employee.sex;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
+                console.log(photoUrl);
                 document.getElementById('employeePhoto').src = photoUrl;
 
                 document.getElementById('gatePassCard').style.display = 'flex';
