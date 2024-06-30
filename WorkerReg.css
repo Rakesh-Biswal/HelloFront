@@ -19,6 +19,9 @@ body {
     border-radius: 10px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     text-align: center;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 80vh; /* Adjust height to fit within the viewport */
+    animation: fadeInContainer 0.5s ease-in-out;
 }
 
 .container:hover {
@@ -162,5 +165,16 @@ button:hover {
     100% {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@keyframes fadeInContainer {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
