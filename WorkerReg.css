@@ -129,3 +129,54 @@ button:hover {
         opacity: 1;
     }
 }
+
+
+.spinner {
+    display: none;
+    /* Initially hide the spinner */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    /* Ensure spinner is above other content */
+}
+
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 35px solid #333;
+    /* Adjust size and color as needed */
+    animation: spin 1s linear infinite;
+    /* Animation for rotation */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Optional: Add pop-up animation */
+.spinner.active {
+    display: block;
+    animation: pop-up 0.3s ease-out;
+}
+
+@keyframes pop-up {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
