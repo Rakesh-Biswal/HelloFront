@@ -206,3 +206,8 @@ button:hover {
     margin-bottom: 10px;
 }
 
+#TotalCards{
+    display: flex;
+    column-gap:40px;
+}
+
