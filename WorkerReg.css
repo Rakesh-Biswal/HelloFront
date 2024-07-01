@@ -23,6 +23,7 @@ body {
     overflow-x: hidden; /* Disable horizontal scrolling */
     max-height: 80vh; /* Adjust height to fit within the viewport */
     animation: fadeInContainer 0.5s ease-in-out;
+    position: relative;
 }
 
 /* Hide scrollbar */
@@ -41,6 +42,7 @@ h2 {
     font-size: 24px;
     color: #333;
     animation: fadeIn 1s ease-in-out;
+    width: 100%; /* Ensure consistent width */
 }
 
 .input-group {
@@ -55,6 +57,7 @@ h2 {
     font-size: 14px;
     color: #3498db;
     margin-bottom: 5px;
+    width: 100%; /* Ensure consistent width */
 }
 
 .input-group input,
@@ -113,6 +116,7 @@ button:hover {
     transform: scale(1.05);
 }
 
+/* Spinner and overlay styles */
 .spinner {
     display: none;
     justify-content: center;
@@ -153,6 +157,25 @@ button:hover {
     z-index: 1;
 }
 
+.overlay.active {
+    display: block;
+}
+
+/* Blur effect for the container when the spinner is active */
+.blur {
+    filter: blur(5px);
+}
+
+/* Center the spinner */
+.spinner-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+/* Animations */
 @keyframes fadeIn {
     0% {
         opacity: 0;

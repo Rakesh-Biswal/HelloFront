@@ -9,6 +9,12 @@
 </head>
 
 <body>
+    <div class="overlay"></div>
+    <div class="spinner-wrapper">
+        <div class="spinner active">
+            <div class="triangle-up"></div>
+        </div>
+    </div>
     <div class="container">
         <h2>Employee Registration</h2>
         <form id="registration-form" autocomplete="off">
@@ -60,14 +66,24 @@
             </div>
             <button type="button" onclick="registerEmployee()">Register</button>
         </form>
-        <div class="spinner" id="spinner">
-            <div class="triangle-up"></div>
-        </div>
-        <div id="overlay" class="overlay"></div>
     </div>
 
     <script>
         const apiUrl = "https://pvtcompany.onrender.com"; // Update with your backend API URL for development
+
+
+        function showSpinner() {
+            document.querySelector('.overlay').classList.add('active');
+            document.querySelector('.spinner-wrapper').style.display = 'flex';
+            document.querySelector('.container').classList.add('blur');
+        }
+
+        function hideSpinner() {
+            document.querySelector('.overlay').classList.remove('active');
+            document.querySelector('.spinner-wrapper').style.display = 'none';
+            document.querySelector('.container').classList.remove('blur');
+        }
+
 
         document.getElementById('dropzone').addEventListener('click', function () {
             document.getElementById('workerPhoto').click();
@@ -82,9 +98,7 @@
 
         async function registerEmployee() {
 
-            const spinner = document.getElementById('spinner');
-            spinner.classList.add('active');
-            overlay.style.display = 'block';
+            showSpinner();
 
             const workerName = document.getElementById('workerName').value;
             const employeeId = document.getElementById('employeeId').value; // New input field
@@ -114,21 +128,15 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    spinner.classList.remove('active');
-                    overlay.style.display = 'none';
-
-                    alert('Employee registered successfully');
+                    hideSpinner();
                     window.location.href = "Dashboard.html";
                     document.getElementById('registration-form').reset(); // Optional: Reset form fields
                 } else {
-                    spinner.classList.remove('active');
-                    overlay.style.display = 'none';
-
+                    hideSpinner();
                     alert('Error: ' + result.message);
                 }
             } catch (error) {
-                spinner.classList.remove('active');
-                overlay.style.display = 'none';
+                hideSpinner();
                 console.error('Error:', error);
                 alert('An error occurred while registering the employee.');
             }
