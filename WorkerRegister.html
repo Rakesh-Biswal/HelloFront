@@ -71,7 +71,6 @@
     <script>
         const apiUrl = "https://pvtcompany.onrender.com"; // Update with your backend API URL for development
 
-
         function showSpinner() {
             document.querySelector('.overlay').classList.add('active');
             document.querySelector('.spinner-wrapper').style.display = 'flex';
@@ -83,7 +82,6 @@
             document.querySelector('.spinner-wrapper').style.display = 'none';
             document.querySelector('.container').classList.remove('blur');
         }
-
 
         document.getElementById('dropzone').addEventListener('click', function () {
             document.getElementById('workerPhoto').click();
@@ -97,7 +95,6 @@
         });
 
         async function registerEmployee() {
-
             showSpinner();
 
             const workerName = document.getElementById('workerName').value;
