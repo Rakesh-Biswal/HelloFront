@@ -39,11 +39,20 @@
                 left: 0;
                 top: 0;
                 width: 100%;
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
             }
 
             #pdfButton,
             #printButton {
                 display: none;
+            }
+
+            .gate-pass-card, 
+            .card {
+                page-break-inside: avoid;
+                -webkit-print-color-adjust: exact;
             }
         }
     </style>
@@ -92,10 +101,13 @@
                 </div>
                 <div class="footer">
                     <div class="signature-card-holder">
-                        <p>Signature of Card Holder</p>
+                        <p>Sign of Card Holder</p>
                     </div>
                     <div class="signature-authorised">
-                        <p>Signature of Authorised Signatory</p>
+                        <p>Sign of Auth.. Signatory</p>
+                    </div>
+                    <div class="signature-Contractor">
+                        <p>Sign of Contractor</p>
                     </div>
                 </div>
             </div>
