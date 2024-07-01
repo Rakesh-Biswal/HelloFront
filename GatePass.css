@@ -59,11 +59,40 @@ button {
     color: #fff;
     font-size: 18px;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
 }
 button:hover {
     background-color: #2980b9;
-    transform: scale(1.03);
+}
+
+/* Spinner styles */
+.spinner {
+    display: none;
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 @keyframes fadeIn {
     from {
@@ -73,157 +102,68 @@ button:hover {
         opacity: 1;
     }
 }
-@keyframes slideIn {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-.spinner {
-    display: none;
-    width: 40px;
-    height: 40px;
-    margin: 20px auto;
-    border: 5px solid #ccc;
-    border-top-color: #3498db;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-.gate-pass-card {
-    width: 100%;
-    max-width: 700px;
-    margin-top: 30px;
+
+/* Gate pass card styles */
+.gate-pass-card, .card {
+    width: 300px;
+    background-color: #fff;
     border: 2px solid #000;
     border-radius: 10px;
-    background-color: #ff5b5b;
-    padding: 30px;
-    color: #000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    flex-direction: column;
-    gap: 20px;
-    animation: slideIn 0.5s ease-in-out;
+    padding: 10px;
+    margin: 20px;
+    display: inline-block;
+    animation: fadeIn 1s ease-in-out;
 }
-.header,
-.body,
-.footer {
+.gate-pass-card .header,
+.card .header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
 }
-.header-left,
-.header-right {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.header-left {
+    text-align: left;
 }
 .gate-pass-title {
+    font-size: 20px;
     font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 10px;
 }
 .mil-dri,
 .mil-dri-number {
-    font-weight: bold;
+    font-size: 12px;
 }
 .body {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 .photo {
-    width: 120px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     border: 1px solid #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-}
-.photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    margin-right: 10px;
 }
 .details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-grow: 1;
 }
 .details p {
     margin-bottom: 10px;
 }
-.value {
-    font-weight: bold;
-}
 .footer {
+    display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 .signature-card-holder,
-.signature-authorised {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.signature-card-holder p,
-.signature-authorised p {
-    font-size: 14px;
-}
-
-#terms-conditions-card {
-    width: 100%;
-    max-width: 700px;
-    margin-top: 30px;
-    border: 2px solid #000;
-    border-radius: 10px;
-    background-color: #ff5b5b;
-    padding: 30px;
-    color: #000;
-    gap: 20px;
-    animation: slideIn 0.5s ease-in-out;
-}
-
-.card h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
+.signature-authorised,
+.signature-Contractor {
+    width: 30%;
     text-align: center;
 }
 
+/* Terms and Conditions styles */
+.card {
+    text-align: left;
+}
 .terms-text {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 10px;
-}
-
-#TotalCards{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px; /* Add some space between the cards and the button */
-}
-
-#convertToPdfButton {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #27ae60;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
-#convertToPdfButton:hover {
-    background-color: #219150;
-    transform: scale(1.05);
+    font-size: 14px;
+    margin: 10px 0;
 }
