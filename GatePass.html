@@ -24,6 +24,42 @@
             background-color: #45a049;
         }
 
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #spinner {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         @media print {
             body * {
                 visibility: hidden;
@@ -56,7 +92,26 @@
             <label for="employeeId">Employee ID</label>
             <input type="text" id="employeeId" name="employeeId" required>
         </div>
-        <button onclick="generateGatePass()">Generate</button>
+        <button onclick="fetchEmployeeDetails()">Fetch Employee Details</button>
+        <div class="spinner" id="spinner"></div>
+    </div>
+
+    <div class="container" id="edit-container" style="display: none;">
+        <h2>Edit Employee Details</h2>
+        <div class="input-group">
+            <label for="mil">Select MIL</label>
+            <select id="mil" name="mil" required>
+                <option value="DRI">DRI</option>
+                <option value="SMS">SMS</option>
+                <option value="DIR">DIR</option>
+                <option value="STORE">STORE</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="validTill">Valid Till</label>
+            <input type="date" id="validTill" name="validTill" required>
+        </div>
+        <button onclick="updateEmployee()">Update & Generate Gate Pass</button>
         <div class="spinner" id="spinner"></div>
     </div>
 
@@ -69,10 +124,10 @@
                         <p class="mil-dri">MIL - <span id="SelMri"></span></p>
                     </div>
                     <div class="header-right">
-                        <p class="mil-dri-number">MIL - DRI / <span id="EmpId" style="font-weight: bold;">XXXX</span>
+                        <p class="mil-dri-number">MIL - <span id="SelMri2">DRI</span> / <span id="EmpId" style="font-weight: bold;">XXXX</span>
                         </p>
                         <p>Valid from: <span class="valid-from" id="validFrom">XX/XX/XXXX</span></p>
-                        <p>Valid Till: <span class="valid-till" id="validTill"></span></p>
+                        <p>Valid Till: <span class="valid-till" id="validTillDisplay"></span></p>
                     </div>
                 </div>
                 <div class="body">
@@ -108,12 +163,9 @@
                     3. The Card is NOT TRANSFERABLE.<br>
                     4. This Card is valid for identification purpose only.<br>
                     5. On renewal fresh Identity Card will be issued in case of missing of this Card. Duplicate Gate
-                    Pass
-                    can be
-                    issued on Payment of Rs.100/- to the Issuing Authority.<br>
+                    Pass can be issued on Payment of Rs.100/- to the Issuing Authority.<br>
                     6. MIL reserved the right to restrict the entry of the Card Holder / cancellation of the Card
-                    without
-                    showing any reason.
+                    without showing any reason.
                 </p>
             </div>
         </div>
@@ -130,12 +182,11 @@
             document.getElementById('TotalCards').style.display = 'none';
         });
 
-        async function generateGatePass() {
-
+        async function fetchEmployeeDetails() {
             const id = document.getElementById('employeeId').value;
 
             if (!id) {
-                alert('Please fill out id fields.');
+                alert('Please fill out the employee ID field.');
                 return;
             }
 
@@ -157,21 +208,64 @@
                 document.getElementById('guardian').innerText = employee.guardian;
                 document.getElementById('address').innerText = employee.workerAddress;
                 document.getElementById('sex').innerText = employee.sex;
-                document.getElementById('SelMri').innerText = employee.mil;
                 document.getElementById('EmpId').innerText = employee.employeeId;
 
                 const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
                 document.getElementById('employeePhoto').src = photoUrl;
 
-
-                const currentDate = new Date();
-                const validFrom = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
-                document.getElementById('validFrom').innerText = validFrom;
-
-
-                document.getElementById('TotalCards').style.display = 'flex';
                 document.getElementById('search-container').style.display = 'none';
+                document.getElementById('edit-container').style.display = 'block';
+            } catch (error) {
+                spinner.style.display = 'none';
+                alert('Error: ' + error.message);
+            }
+        }
 
+        async function updateEmployee() {
+            const id = document.getElementById('employeeId').value;
+            const mil = document.getElementById('mil').value;
+            const validTill = document.getElementById('validTill').value;
+
+            if (!mil || !validTill) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            const spinner = document.getElementById('spinner');
+            spinner.style.display = 'block';
+
+            try {
+                const response = await fetch(`${apiUrl}/employee/update/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ mil, validTill }),
+                });
+
+                spinner.style.display = 'none';
+
+                if (!response.ok) {
+                    throw new Error('Failed to update employee details');
+                }
+
+                const validFromDate = new Date();
+                const validTillDate = new Date(validTill);
+
+                const formatDate = (date) => {
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const year = date.getFullYear();
+                    return `${day}/${month}/${year}`;
+                };
+
+                document.getElementById('validFrom').innerText = formatDate(validFromDate);
+                document.getElementById('validTillDisplay').innerText = formatDate(validTillDate);
+                document.getElementById('SelMri').innerText = mil;
+                document.getElementById('SelMri2').innerText = mil;
+
+                document.getElementById('edit-container').style.display = 'none';
+                document.getElementById('TotalCards').style.display = 'block';
             } catch (error) {
                 spinner.style.display = 'none';
                 alert('Error: ' + error.message);

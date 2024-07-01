@@ -27,16 +27,6 @@
                 <input type="text" id="employeeId" name="employeeId" placeholder="Enter employee ID" required>
             </div>
             <div class="input-group">
-                <label for="mil">Select MIL</label>
-                <select id="mil" name="mil" required>
-                    <option value="">Select...</option>
-                    <option value="DRI">DRI</option>
-                    <option value="SMS">SMS</option>
-                    <option value="DIR">DIR</option>
-                    <option value="STORE">STORE</option>
-                </select>
-            </div>
-            <div class="input-group">
                 <label for="contractor">Working Under Contractor</label>
                 <input type="text" id="contractor" name="contractor" placeholder="Enter contractor name" required>
             </div>
@@ -99,7 +89,6 @@
 
             const workerName = document.getElementById('workerName').value;
             const employeeId = document.getElementById('employeeId').value; // New input field
-            const mil = document.getElementById('mil').value;
             const contractor = document.getElementById('contractor').value;
             const guardian = document.getElementById('guardian').value;
             const sex = document.getElementById('sex').value;
@@ -109,7 +98,6 @@
             const formData = new FormData();
             formData.append('workerName', workerName);
             formData.append('employeeId', employeeId); // Append new field
-            formData.append('mil', mil);
             formData.append('contractor', contractor);
             formData.append('guardian', guardian);
             formData.append('sex', sex);
