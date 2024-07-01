@@ -112,7 +112,7 @@
             <input type="date" id="validTill" name="validTill" required>
         </div>
         <button onclick="updateEmployee()">Update & Generate Gate Pass</button>
-        <div class="spinner" id="spinner"></div>
+        <div class="spinner" id="updateSpinner"></div>
     </div>
 
     <div id="TotalCards" style="display: none;">
@@ -231,7 +231,7 @@
                 return;
             }
 
-            const spinner = document.getElementById('spinner');
+            const spinner = document.getElementById('updateSpinner');
             spinner.style.display = 'block';
 
             try {
