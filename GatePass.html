@@ -53,10 +53,6 @@
     <div class="container" id="search-container">
         <h2>Generate Gate Pass</h2>
         <div class="input-group">
-            <label for="employeeName">Employee Name</label>
-            <input type="text" id="employeeName" name="employeeName" required>
-        </div>
-        <div class="input-group">
             <label for="employeeId">Employee ID</label>
             <input type="text" id="employeeId" name="employeeId" required>
         </div>
@@ -144,7 +140,7 @@
             spinner.style.display = 'block';
 
             try {
-                const response = await fetch(`${apiUrl}/employee/${name}/${id}`);
+                const response = await fetch(`${apiUrl}/employee/${id}`);
                 spinner.style.display = 'none';
 
                 if (!response.ok) {
