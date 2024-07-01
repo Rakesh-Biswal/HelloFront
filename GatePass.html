@@ -55,10 +55,12 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
         }
+
 
         @media print {
             body * {
@@ -75,11 +77,34 @@
                 left: 0;
                 top: 0;
                 width: 100%;
+                background-color: white;
+
+                padding: 20px;
+
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
             }
 
             #pdfButton,
             #printButton {
                 display: none;
+            }
+
+
+            .gate-pass-card,
+            .card {
+                background-color: #ff5b5b;
+
+                margin-bottom: 20px;
+
+                padding: 20px;
+
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+            }
+
+            .terms-text {
+                margin-top: 0;
             }
         }
     </style>
@@ -124,7 +149,8 @@
                         <p class="mil-dri">MIL - <span id="SelMri"></span></p>
                     </div>
                     <div class="header-right">
-                        <p class="mil-dri-number">MIL - <span id="SelMri2">DRI</span> / <span id="EmpId" style="font-weight: bold;">XXXX</span>
+                        <p class="mil-dri-number">MIL - <span id="SelMri2">DRI</span> / <span id="EmpId"
+                                style="font-weight: bold;">XXXX</span>
                         </p>
                         <p>Valid from: <span class="valid-from" id="validFrom">XX/XX/XXXX</span></p>
                         <p>Valid Till: <span class="valid-till" id="validTillDisplay"></span></p>
