@@ -72,7 +72,7 @@
                         <p class="mil-dri-number">MIL - DRI / <span id="EmpId" style="font-weight: bold;">XXXX</span>
                         </p>
                         <p>Valid from: <span class="valid-from" id="validFrom">XX/XX/XXXX</span></p>
-                        <p>Valid Till: <span class="valid-till" id="validTill">XX/XX/XXXX</span></p>
+                        <p>Valid Till: <span class="valid-till" id="validTill"></span></p>
                     </div>
                 </div>
                 <div class="body">
@@ -168,11 +168,6 @@
                 const validFrom = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
                 document.getElementById('validFrom').innerText = validFrom;
 
-
-                const validTillDate = new Date(currentDate);
-                validTillDate.setMonth(currentDate.getMonth() + 1);
-                const validTill = `${validTillDate.getDate()}/${validTillDate.getMonth() + 1}/${validTillDate.getFullYear()}`;
-                document.getElementById('validTill').innerText = validTill;
 
                 document.getElementById('TotalCards').style.display = 'flex';
                 document.getElementById('search-container').style.display = 'none';
