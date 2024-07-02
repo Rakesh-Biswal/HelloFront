@@ -199,7 +199,7 @@
                 document.getElementById('sex').innerText = employee.sex;
                 document.getElementById('EmpId').innerText = employee.employeeId;
 
-                const photoUrl = `${apiUrl}/uploads/${employee.workerPhoto}`;
+                const photoUrl =employee.workerPhoto;
                 document.getElementById('employeePhoto').src = photoUrl;
 
                 document.getElementById('search-container').style.display = 'none';
