@@ -299,15 +299,7 @@
         }
 
         function printGatePass() {
-            const printContents = document.getElementById('TotalCards').innerHTML;
-            const printWindow = window.open('', '', 'height=600,width=800');
-            printWindow.document.write('<html><head><title>Print Gate Pass</title>');
-            printWindow.document.write('<style>@media print { .gate-pass-card, .card { background-color: #ff5b5b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }</style>');
-            printWindow.document.write('</head><body>');
-            printWindow.document.write(printContents);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
+            window.print();
         }
     </script>
 </body>
