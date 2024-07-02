@@ -78,11 +78,8 @@
                 top: 0;
                 width: 100%;
                 background-color: white;
-
                 padding: 20px;
-
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
             }
 
             #pdfButton,
@@ -90,17 +87,11 @@
                 display: none;
             }
 
-
             .gate-pass-card,
             .card {
-                background-color: #ff5b5b;
-
-                margin-bottom: 20px;
-
-                padding: 20px;
-
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-
+                background-color: #ff5b5b !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
 
             .terms-text {
@@ -142,7 +133,7 @@
 
     <div id="TotalCards" style="display: none;">
         <div id="printSection">
-            <div class="gate-pass-card" id="gatePassCard">
+            <div class="gate-pass-card" id="gatePassCard" style="background-color: #ff5b5b;">
                 <div class="header">
                     <div class="header-left">
                         <p class="gate-pass-title">GATE PASS</p>
@@ -181,7 +172,7 @@
                 </div>
             </div>
 
-            <div class="card" id="terms-conditions-card">
+            <div class="card" id="terms-conditions-card" style="background-color: #ff5b5b;">
                 <h3>Terms & Conditions</h3>
                 <p class="terms-text">
                     1. Please carry the Identity Card always with you while within the Factory Premises.<br>
@@ -299,7 +290,15 @@
         }
 
         function printGatePass() {
-            window.print();
+            const printContents = document.getElementById('TotalCards').innerHTML;
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print Gate Pass</title>');
+            printWindow.document.write('<style>@media print { .gate-pass-card, .card { background-color: #ff5b5b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }</style>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(printContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
         }
     </script>
 </body>
