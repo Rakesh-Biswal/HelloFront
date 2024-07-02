@@ -63,48 +63,11 @@
 
 
         @media print {
-            body * {
-                visibility: hidden;
-            }
-
-            #printSection,
-            #printSection * {
-                visibility: visible;
-            }
-
-            #printSection {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                background-color: rgb(255, 0, 0);
-
-                padding: 20px;
-
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-            }
-
-            #pdfButton,
-            #printButton {
-                display: none;
-            }
-
-
             .gate-pass-card,
             .card {
-                background-color: #ff5b5b;
-
-                margin-bottom: 20px;
-
-                padding: 20px;
-
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-
-            }
-
-            .terms-text {
-                margin-top: 0;
+                background-color: #ff5b5b !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
             }
         }
     </style>
@@ -124,7 +87,7 @@
     <div class="container" id="edit-container" style="display: none;">
         <h2>Edit Employee Details</h2>
         <div class="input-group">
-            <label for="mil">Select MIL</label>
+            <label for="mil">Select Contractor</label>
             <select id="mil" name="mil" required>
                 <option value="DRI">DRI</option>
                 <option value="SMS">SMS</option>
