@@ -237,10 +237,9 @@ button:hover {
 
     #TotalCards {
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 20px;
+        gap: 6px;
         width: 100%;
         max-width: 100%;
         page-break-inside: avoid;
@@ -277,6 +276,10 @@ button:hover {
     }
 
     #convertToPdfButton {
+        display: none;
+    }
+
+    #printButton{
         display: none;
     }
 }
