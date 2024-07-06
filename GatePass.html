@@ -65,52 +65,10 @@
 /* Print styles */
 @media print {
     body {
-        background-color: white;
+        background-color: rgb(0, 0, 0);
     }
 
-    /* Ensure cards are in a single row with gap */
-    #TotalCards {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px; /* Adjust gap between cards */
-        width: 100%;
-    }
-
-    /* Styling for each card */
-    .gate-pass-card,
-    #terms-conditions-card {
-        width: 48%; /* Adjust width to fit two cards in a row */
-        padding: 15px;
-        border: 1px solid black;
-        box-shadow: none;
-        page-break-inside: avoid; /* Prevent page breaks inside each card */
-    }
-
-    /* Additional styles specific to .gate-pass-card */
-    .gate-pass-card {
-        max-width: none; /* Adjust as needed */
-    }
-
-    /* Additional styles specific to #terms-conditions-card */
-    #terms-conditions-card {
-        max-width: none; /* Adjust as needed */
-    }
-
-    /* Adjust margins and spacing within cards for print */
-    .header,
-    .body,
-    .footer {
-        margin-bottom: 10px;
-    }
-
-    .details p {
-        margin-bottom: 5px;
-    }
-
-    .header-left,
-    .header-right {
-        gap: 2px; /* Adjust gap between elements within header */
-    }
+   
 
     /* Hide print button during printing */
     #printButton {
