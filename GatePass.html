@@ -7,6 +7,7 @@
     <title>Gate Pass Generation</title>
     <link rel="stylesheet" href="GatePass.css">
     <style>
+        
         #printButton {
             display: block;
             margin: 20px auto;
@@ -61,78 +62,7 @@
         }
 
 
-        @media print {
 
-            .gate-pass-card,
-            .card {
-                width: 45%;
-                /* Adjust width to fit two cards in a single row */
-                float: left;
-                /* Align cards in a single row */
-                margin: 5px;
-                /* Add some margin for spacing */
-                box-sizing: border-box;
-                /* Ensure padding and borders are included in the width */
-            }
-
-            .gate-pass-card img,
-            .gate-pass-card .details p,
-            .card .terms-text p {
-                font-size: 0.8em;
-                /* Reduce font size for better visualization */
-            }
-
-            .gate-pass-card .header,
-            .gate-pass-card .body,
-            .gate-pass-card .footer,
-            .card {
-                padding: 10px;
-                /* Adjust padding to fit smaller size */
-            }
-
-            .gate-pass-card .header-left,
-            .gate-pass-card .header-right,
-            .gate-pass-card .body,
-            .gate-pass-card .footer {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .gate-pass-card .header-left,
-            .gate-pass-card .header-right {
-                font-size: 0.8em;
-                /* Adjust header font size */
-            }
-
-            .gate-pass-card .body .photo {
-                width: 80px;
-                /* Reduce photo size */
-                height: 100px;
-            }
-
-            .gate-pass-card .body .details p {
-                margin: 5px 0;
-                /* Reduce margin between details */
-            }
-
-            .gate-pass-card .footer div {
-                width: 80%;
-                /* Adjust width of footer sections */
-                font-size: 0.7em;
-                /* Adjust font size for footer */
-            }
-
-            .card .terms-text {
-                font-size: 0.8em;
-                /* Adjust font size for terms text */
-            }
-
-            /* Hide print button */
-            #printButton {
-                display: none;
-            }
-        }
     </style>
 </head>
 
@@ -262,7 +192,7 @@
                 document.getElementById('sex').innerText = employee.sex;
                 document.getElementById('EmpId').innerText = employee.employeeId;
 
-                const photoUrl = employee.workerPhoto;
+                const photoUrl =employee.workerPhoto;
                 document.getElementById('employeePhoto').src = photoUrl;
 
                 document.getElementById('search-container').style.display = 'none';
