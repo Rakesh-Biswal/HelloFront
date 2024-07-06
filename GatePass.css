@@ -205,7 +205,7 @@ button:hover {
     margin-bottom: 10px;
 }
 
-#TotalCards{
+#TotalCards {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -226,4 +226,57 @@ button:hover {
 #convertToPdfButton:hover {
     background-color: #219150;
     transform: scale(1.05);
+}
+
+/* Print styles */
+@media print {
+    body {
+        background-color: white;
+        display: block;
+    }
+
+    #TotalCards {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        width: 100%;
+        max-width: 100%;
+        page-break-inside: avoid;
+    }
+
+    .gate-pass-card,
+    #terms-conditions-card {
+        width: 48%;
+        margin: 0;
+        padding: 15px;
+        border: 1px solid black;
+        box-shadow: none;
+        page-break-inside: avoid;
+    }
+
+    .gate-pass-card {
+        max-width: none;
+    }
+
+    #terms-conditions-card {
+        max-width: none;
+    }
+
+    .header, .body, .footer {
+        margin-bottom: 10px;
+    }
+
+    .details p {
+        margin-bottom: 5px;
+    }
+
+    .header-left, .header-right {
+        gap: 2px;
+    }
+
+    #convertToPdfButton {
+        display: none;
+    }
 }
