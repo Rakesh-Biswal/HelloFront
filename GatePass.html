@@ -62,6 +62,7 @@
         }
 
         /* Print styles */
+/* Print styles */
 @media print {
     body {
         background-color: white;
@@ -70,16 +71,15 @@
     /* Ensure cards are in a single row with gap */
     #TotalCards {
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px; /* Adjust gap between cards */
         justify-content: space-between;
-        /* Optionally adjust justify-content based on spacing needs */
+        gap: 10px; /* Adjust gap between cards */
+        width: 100%;
     }
 
     /* Styling for each card */
     .gate-pass-card,
     #terms-conditions-card {
-        flex: 1 1 calc(50% - 5px); /* Adjust width for two cards in a row */
+        width: 48%; /* Adjust width to fit two cards in a row */
         padding: 15px;
         border: 1px solid black;
         box-shadow: none;
@@ -122,6 +122,7 @@
         display: none;
     }
 }
+
 
 
     </style>
