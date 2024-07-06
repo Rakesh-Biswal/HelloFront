@@ -7,6 +7,7 @@
     <title>Gate Pass Generation</title>
     <link rel="stylesheet" href="GatePass.css">
     <style>
+        /* Your existing CSS code */
         @page {
             size: A4;
             margin: 0;
@@ -304,7 +305,7 @@
     </div>
 
     <div id="TotalCards" style="display: none;">
-        <nav><img src="maithan-company-logo.png" alt=""></nav>
+        <nav><img src="logo.jpg" alt=""></nav>
         <div class="page-wrapper">
             <div class="page">
                 <div class="container">
@@ -318,7 +319,7 @@
                                 <span class="info"><b>MIL - <span class="work-type/number"><span id="SelMri2">DRI </span> / <span id="EmpId">1075</span></span></b></span>
                                 <span class="info"><b>Valid from : </b> <span
                                         class="valid-from" id="validFrom"> </span></span>
-                                <span class="info"><b>Valid Till : </b><span class="valid-till" id="validTill">
+                                <span class="info"><b>Valid Till : </b><span class="valid-till" id="validTillDisplay">
                                         </span></span>
                             </div>
                         </div>
@@ -328,146 +329,121 @@
                             </div>
                             <div class="mid-section-right">
                                 <span class="info"><b>Name : </b> <span class="employee-name" id="employeeNameValue"> </span></span>
-                                <span class="info"><b>Sex : </b><span class="sex" id="sex"> </span></span>
-                                <span class="info"><b>Working under Contractor : </b><span class="conractor-name" id="contractor"> </span></span>
-                                <span class="info"><b>Guardian / Spouse : </b> <span class="guardian-name" id="guardian"> </span></span>
-                                <span class="info"><b>Address : </b> <span class="address" id="address"> </span></span>
+                                <span class="info"><b>S/O </b> <span class="father-name" id="employeeFather"> </span></span>
+                                <span class="info"><b>Department : </b> <span class="department" id="employeeDepartment"> </span></span>
                             </div>
                         </div>
                         <div class="bottom-section">
-                            <b>Signature of Card Holder</b>
-                            <b>Signature of contractor</b>
-                            <b>Authorised Signatory</b>
+                            <b class="security-officer">Security Officer</b>
+                            <b class="authorised-by">Authorised By</b>
+                            <b class="acknowledgement">Acknowledgement</b>
                         </div>
                     </div>
                     <div class="terms-wrapper">
                         <div class="terms">
-                            <span><b class="terms-title">Terms & Conditions</b>:-</span>
-                            <ol class="terms-list">
-                                <li>Please carry the Identity Card always with you while within the Factory Premises.
-                                </li>
-                                <li>Please show the Card to Security to enter in MIL Factory Premises.</li>
-                                <li>The Card is NOT TRANSFERABLE.</li>
-                                <li>This Card is valid for identification purpose only.</li>
-                                <li>On renewal fresh Identity Card will be issued in case of missing of this Card.
-                                    Duplicate
-                                    Gate
-                                    Pass can be issued on Payment of Rs.100/- to the Issuing Authority.</li>
-                                <li>MIL reserves the right to restrict the entry of the Card Holder/cancellation of the
-                                    Card
-                                    without
-                                    showing any reason.</li>
-                            </ol>
+                            <div class="terms-title">Terms & Conditions:</div>
+                            <ul class="terms-list">
+                                <li>Do not misplace this pass.</li>
+                                <li>Ensure the validity dates are accurate.</li>
+                                <li>Return the pass to the Security Officer after the validity period.</li>
+                                <li>Follow all security protocols when using this pass.</li>
+                                <li>Keep this pass in a secure place at all times.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
 
             </div>
+            <div class="btn">
+                <button onclick="window.print()" class="print-button">Print</button>
+            </div>
         </div>
-        <div class="btn"><button class="print-button" onclick="printGatePass()">Print</button></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-        const apiUrl = "https://pvtcompany.onrender.com";
+        const searchContainer = document.getElementById('search-container');
+        const editContainer = document.getElementById('edit-container');
+        const totalCards = document.getElementById('TotalCards');
+        const spinner = document.getElementById('spinner');
+        const updateSpinner = document.getElementById('updateSpinner');
 
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById('TotalCards').style.display = 'none';
-        });
-
-        async function fetchEmployeeDetails() {
-            const id = document.getElementById('employeeId').value;
-
-            if (!id) {
-                alert('Please fill out the employee ID field.');
-                return;
-            }
-
-            const spinner = document.getElementById('spinner');
+        function fetchEmployeeDetails() {
+            const employeeId = document.getElementById('employeeId').value;
             spinner.style.display = 'block';
 
-            try {
-                const response = await fetch(`${apiUrl}/employee/${id}`);
-                spinner.style.display = 'none';
+            fetch(`/api/employees/${employeeId}`)
+                .then(response => response.json())
+                .then(data => {
+                    spinner.style.display = 'none';
+                    if (data) {
+                        document.getElementById('SelMri').innerText = data.department;
+                        document.getElementById('SelMri2').innerText = data.department;
+                        document.getElementById('EmpId').innerText = data.employeeId;
+                        document.getElementById('validFrom').innerText = new Date().toLocaleDateString();
+                        document.getElementById('validTillDisplay').innerText = '';
 
-                if (!response.ok) {
-                    throw new Error('Employee not found');
-                }
+                        // Add condition to ensure employeePhoto exists before setting its src
+                        const employeePhoto = document.getElementById('employeePhoto');
+                        if (employeePhoto) {
+                            employeePhoto.src = data.photo;
+                        }
+                        // Ensure other elements exist before setting innerText
+                        const employeeName = document.getElementById('employeeNameValue');
+                        if (employeeName) {
+                            employeeName.innerText = data.name;
+                        }
+                        const employeeFather = document.getElementById('employeeFather');
+                        if (employeeFather) {
+                            employeeFather.innerText = data.fatherName;
+                        }
+                        const employeeDepartment = document.getElementById('employeeDepartment');
+                        if (employeeDepartment) {
+                            employeeDepartment.innerText = data.department;
+                        }
 
-                const employee = await response.json();
-
-                document.getElementById('employeeNameValue').innerText = employee.workerName;
-                document.getElementById('contractor').innerText = employee.contractor;
-                document.getElementById('guardian').innerText = employee.guardian;
-                document.getElementById('address').innerText = employee.workerAddress;
-                document.getElementById('sex').innerText = employee.sex;
-                document.getElementById('EmpId').innerText = employee.employeeId;
-
-                const photoUrl = employee.workerPhoto;
-                document.getElementById('employeePhoto').src = photoUrl;
-
-                document.getElementById('search-container').style.display = 'none';
-                document.getElementById('edit-container').style.display = 'block';
-            } catch (error) {
-                spinner.style.display = 'none';
-                alert('Error: ' + error.message);
-            }
+                        searchContainer.style.display = 'none';
+                        editContainer.style.display = 'block';
+                    } else {
+                        alert('Employee not found');
+                    }
+                })
+                .catch(error => {
+                    spinner.style.display = 'none';
+                    console.error('Error fetching employee details:', error);
+                    alert('Error fetching employee details');
+                });
         }
 
-        async function updateEmployee() {
-            const id = document.getElementById('employeeId').value;
+        function updateEmployee() {
+            const employeeId = document.getElementById('employeeId').value;
             const mil = document.getElementById('mil').value;
             const validTill = document.getElementById('validTill').value;
 
-            if (!mil || !validTill) {
-                alert('Please fill out all fields.');
-                return;
-            }
+            updateSpinner.style.display = 'block';
 
-            const spinner = document.getElementById('updateSpinner');
-            spinner.style.display = 'block';
-
-            try {
-                const response = await fetch(`${apiUrl}/employee/update/${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ mil, validTill }),
+            fetch(`/api/employees/${employeeId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ department: mil, validTill: validTill })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    updateSpinner.style.display = 'none';
+                    if (data) {
+                        document.getElementById('validTillDisplay').innerText = validTill;
+                        totalCards.style.display = 'block';
+                        editContainer.style.display = 'none';
+                    } else {
+                        alert('Error updating employee details');
+                    }
+                })
+                .catch(error => {
+                    updateSpinner.style.display = 'none';
+                    console.error('Error updating employee details:', error);
+                    alert('Error updating employee details');
                 });
-
-                spinner.style.display = 'none';
-
-                if (!response.ok) {
-                    throw new Error('Failed to update employee details');
-                }
-
-                const validFromDate = new Date();
-                const validTillDate = new Date(validTill);
-
-                const formatDate = (date) => {
-                    const day = String(date.getDate()).padStart(2, '0');
-                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                    const year = date.getFullYear();
-                    return `${day}/${month}/${year}`;
-                };
-
-                document.getElementById('validFrom').innerText = formatDate(validFromDate);
-                document.getElementById('validTillDisplay').innerText = formatDate(validTillDate);
-                document.getElementById('SelMri').innerText = mil;
-                document.getElementById('SelMri2').innerText = mil;
-
-                document.getElementById('edit-container').style.display = 'none';
-                document.getElementById('TotalCards').style.display = 'block';
-            } catch (error) {
-                spinner.style.display = 'none';
-                alert('Error: ' + error.message);
-            }
-        }
-
-        function printGatePass() {
-            window.print();
         }
     </script>
 </body>
