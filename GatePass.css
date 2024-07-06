@@ -272,7 +272,8 @@ button:hover {
         display: flex;
         justify-content: space-between;
         /* Adjust to space-between for gap */
-        align-items: flex-start;
+        display: flex;
+        flex-direction: row;
         gap: 5px;
         /* 5px gap between cards */
         width: 100%;
