@@ -5,19 +5,22 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
-
+@page {
+    size: A4;
+    margin: 0;
+}
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #061225;
 }
 
 .container {
     width: 70%;
     max-width: 500px;
-    background-color: #fff;
+    background-color: #000000b6;
     padding: 30px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -25,10 +28,12 @@ body {
     animation: slideIn 0.5s ease-in-out;
 }
 
+
+
 h2 {
     margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
+    font-size: 26px;
+    color: #fffffff6;
     animation: fadeIn 1s ease-in-out;
 }
 
@@ -39,15 +44,15 @@ h2 {
 
 .input-group label {
     display: block;
-    font-size: 14px;
-    color: #3498db;
+    font-size: 15px;
+    color: #62aee0;
     margin-bottom: 5px;
 }
 
 .input-group input {
     width: calc(100% - 20px);
     padding: 15px;
-    border: 2px solid #ccc;
+    border: 2px solid #585bdd;
     border-radius: 8px;
     transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     font-size: 16px;
@@ -114,133 +119,6 @@ button:hover {
     }
 }
 
-.gate-pass-card {
-    width: 100%;
-    max-width: 700px;
-    margin-top: 30px;
-    border: 2px solid #000;
-    border-radius: 10px;
-    background-color: #ff5b5b;
-    padding: 30px;
-    color: #000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    flex-direction: column;
-    gap: 20px;
-    animation: slideIn 0.5s ease-in-out;
-}
-
-.header,
-.body,
-.footer {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.header-left,
-.header-right {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.gate-pass-title {
-    font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.mil-dri,
-.mil-dri-number {
-    font-weight: bold;
-}
-
-.body {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 20px;
-}
-
-.photo {
-    width: 120px;
-    height: 150px;
-    border: 1px solid #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-}
-
-.photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.details p {
-    margin-bottom: 10px;
-}
-
-.value {
-    font-weight: bold;
-}
-
-.footer {
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.signature-card-holder,
-.signature-authorised {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.signature-card-holder p,
-.signature-authorised p {
-    font-size: 14px;
-}
-
-#terms-conditions-card {
-    width: 100%;
-    max-width: 700px;
-    margin-top: 30px;
-    border: 2px solid #000;
-    border-radius: 10px;
-    background-color: #ff5b5b;
-    padding: 30px;
-    color: #000;
-    gap: 20px;
-    animation: slideIn 0.5s ease-in-out;
-}
-
-.card h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.terms-text {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 10px;
-}
-
-#TotalCards {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    /* Add some space between the cards and the button */
-}
 
 #convertToPdfButton {
     margin-top: 20px;
@@ -259,5 +137,183 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Print styles */
-/* Print styles */
+
+
+.page-wrapper {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+}
+
+#TotalCards {
+    background-color: #022a35;
+    width: 793px;
+    height: 1122.5px;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+#printSection {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 2px;
+    margin-right: 1px;
+}
+
+.gate-pass-card,
+.terms-wrapper {
+    width: 396.5px;
+    background-color: #e2503a;
+    box-sizing: border-box;
+    height: 265.6px;
+    border-radius: 3px;
+    display: grid;
+    grid-template-rows: 62px 143px 52px;
+    grid-template-columns: 385px;
+    padding-top: 4px;
+    padding-left: 3.5px;
+}
+
+.header,
+.body,
+.footer {
+    display: flex;
+    border: 2px solid black;
+}
+
+.header-left,
+.header-right {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+    width: 198px;
+}
+
+.header-left {
+    border-right: 2px solid black;
+    gap: 10px;
+}
+
+.header-right p,
+.header-left p {
+    margin-left: 4px;
+}
+
+
+.mil-dri,
+.gate-pass-title {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.body {
+    border-top: 0px;
+    border-bottom: 0px;
+}
+
+.photo,
+.details {
+    display: flex;
+    flex-direction: column;
+    height: 130px;
+    width: 198px;
+}
+
+.details {
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: bold;
+
+}
+
+.value {
+    font-weight: 500 !important;
+    font-size: 13px;
+}
+
+.photo img {
+    width: 90px;
+    height: 120px;
+    border: 1px solid #000;
+    background-color: #f1e9e9;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    margin-top: 6px;
+    margin-left: 15px;
+}
+
+.footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.footer div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 15px;
+    font-size: 13px;
+    padding-right: 3px;
+}
+
+.footer div p {
+    font-weight: 600;
+}
+
+.terms-wrapper {
+    padding: 3px;
+}
+
+#terms-conditions-card {
+    padding: 10px;
+    border: 2px solid black;
+    height: 257px;
+}
+
+.terms-list {
+    margin-top: 15px;
+    padding-left: 10px;
+    list-style-type: decimal;
+    font-size: 13px;
+}
+
+.terms-list li {
+    margin-bottom: 3px;
+}
+.btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+#printButton {
+    height: 40px;
+    width: 200px;
+    border-radius: 20px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    background-color: greenyellow;
+    font-weight: bold;
+    font-size: 20px;
+    border: 1px solid green;
+}
+
+#printButton:hover {
+    transform: scale(1.01) !important;
+    background-color: #5fbf11;
+    outline: 2px solid greenyellow;
+}
