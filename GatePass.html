@@ -161,15 +161,17 @@
                 </div>
             </div>
         </div>
+
+        <div class="btn">
+            <button id="printButton" onclick="printGatePass()">Print</button>
+            <script>
+                function printGatePass() {
+                    window.print();
+                }
+            </script>
+        </div>
     </div>
-    <div class="btn">
-        <button id="printButton" onclick="printGatePass()">Print</button>
-        <script>
-            function printGatePass() {
-                window.print();
-            }
-        </script>
-    </div>
+
 
 
 
@@ -213,7 +215,7 @@
                 document.getElementById('employeePhoto').src = photoUrl;
 
                 document.getElementById('search-container').style.display = 'none';
-                document.getElementById('TotalCards').style.display = 'block';
+                document.getElementById('edit-container').style.display = 'block';
             } catch (error) {
                 spinner.style.display = 'none';
                 alert('Error: ' + error.message);
@@ -264,7 +266,6 @@
                 document.getElementById('SelMri2').innerText = mil;
 
                 document.getElementById('edit-container').style.display = 'none';
-
                 document.getElementById('TotalCards').style.display = 'block';
 
             } catch (error) {
