@@ -16,10 +16,11 @@
             transform: translate(-50%, -50%);
             width: 50px;
             height: 50px;
-            background-color: #3498db;
-            animation: spinner 1s infinite;
-            z-index: 1000;
-            /* Ensure spinner is above everything else */
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+            z-index: 1000; /* Ensure spinner is above everything else */
         }
 
         /* Blurred overlay */
@@ -30,33 +31,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            /* Semi-transparent black */
-            z-index: 999;
-            /* Below spinner but above other content */
-            backdrop-filter: blur(5px);
-            /* Apply blur effect to the overlay */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 999; /* Below spinner but above other content */
+            backdrop-filter: blur(5px); /* Apply blur effect to the overlay */
         }
 
-        @keyframes spinner {
+        @keyframes spin {
             0% {
-                transform: translate(-50%, -50%) scale(1) rotate(0deg);
-            }
-
-            25% {
-                transform: translate(-50%, -50%) scale(1.2) rotate(90deg);
-            }
-
-            50% {
-                transform: translate(-50%, -50%) scale(1) rotate(180deg);
-            }
-
-            75% {
-                transform: translate(-50%, -50%) scale(1.2) rotate(270deg);
+                transform: rotate(0deg);
             }
 
             100% {
-                transform: translate(-50%, -50%) scale(1) rotate(360deg);
+                transform: rotate(360deg);
             }
         }
     </style>
@@ -88,7 +74,6 @@
         <div id="overlay" class="overlay"></div>
     </div>
     <script>
-
         const apiUrl = "https://pvtcompany.onrender.com";
         document.addEventListener('DOMContentLoaded', function () {
             // Disable autocomplete on the form and its fields
@@ -96,7 +81,7 @@
             form.setAttribute('autocomplete', 'off');
 
             // Clear input fields on load to prevent browser autofill
-            const inputs = form.querySelectorAll('input[type="text"], input[type="password"]');
+            const inputs = form.querySelectorAll('input[type="email"], input[type="password"]');
             inputs.forEach(input => {
                 input.value = '';
                 input.addEventListener('focus', () => {
@@ -109,6 +94,8 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const spinner = document.getElementById('spinner');
+            const overlay = document.getElementById('overlay');
+
             spinner.style.display = 'block';
             overlay.style.display = 'block'; // Show overlay
 
@@ -124,19 +111,11 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    spinner.style.display = 'none';
-                    overlay.style.display = 'none';
                     window.location.href = 'Dashboard.html';
-                    // Handle successful login (e.g., redirect to admin dashboard)
                 } else {
-                    spinner.style.display = 'none';
-                    overlay.style.display = 'none';
                     alert('Login failed: ' + result.message);
-                    // Handle login failure
                 }
             } catch (error) {
-                spinner.style.display = 'none';
-                    overlay.style.display = 'none';
                 console.error('Error during login:', error);
                 alert('An error occurred during login.');
             } finally {
