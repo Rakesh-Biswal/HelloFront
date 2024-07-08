@@ -12,7 +12,10 @@
     <div class="overlay"></div>
     <div class="spinner-wrapper">
         <div class="spinner active">
-            <div class="triangle-up"></div>
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
         </div>
     </div>
     <div class="container">
@@ -58,6 +61,8 @@
         </form>
     </div>
 
+    <div id="message-box" class="message-box"></div>
+
     <script>
         const apiUrl = "https://pvtcompany.onrender.com"; // Update with your backend API URL for development
 
@@ -71,6 +76,18 @@
             document.querySelector('.overlay').classList.remove('active');
             document.querySelector('.spinner-wrapper').style.display = 'none';
             document.querySelector('.container').classList.remove('blur');
+        }
+
+        function showMessage(message, type) {
+            const messageBox = document.getElementById('message-box');
+            messageBox.textContent = message;
+            messageBox.className = `message-box ${type}`;
+            messageBox.classList.add('visible');
+        }
+
+        function hideMessage() {
+            const messageBox = document.getElementById('message-box');
+            messageBox.classList.remove('visible');
         }
 
         document.getElementById('dropzone').addEventListener('click', function () {
@@ -88,7 +105,7 @@
             showSpinner();
 
             const workerName = document.getElementById('workerName').value;
-            const employeeId = document.getElementById('employeeId').value; // New input field
+            const employeeId = document.getElementById('employeeId').value;
             const contractor = document.getElementById('contractor').value;
             const guardian = document.getElementById('guardian').value;
             const sex = document.getElementById('sex').value;
@@ -97,7 +114,7 @@
 
             const formData = new FormData();
             formData.append('workerName', workerName);
-            formData.append('employeeId', employeeId); // Append new field
+            formData.append('employeeId', employeeId);
             formData.append('contractor', contractor);
             formData.append('guardian', guardian);
             formData.append('sex', sex);
@@ -112,19 +129,22 @@
 
                 const result = await response.json();
 
+                hideSpinner();
+
                 if (response.ok) {
-                    hideSpinner();
-                    alert('Registration Successful');
-                    window.location.href = "Dashboard.html";
-                    document.getElementById('registration-form').reset(); // Optional: Reset form fields
+                    showMessage('Registration Successful', 'success');
+                    setTimeout(() => {
+                        hideMessage();
+                        window.location.href = "Dashboard.html";
+                        document.getElementById('registration-form').reset();
+                    }, 2000);
                 } else {
-                    hideSpinner();
-                    alert('Error: ' + result.message);
+                    showMessage('Error: ' + result.message, 'error');
                 }
             } catch (error) {
                 hideSpinner();
                 console.error('Error:', error);
-                alert('An error occurred while registering the employee.');
+                showMessage('An error occurred while registering the employee.', 'error');
             }
         }
     </script>

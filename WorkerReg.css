@@ -19,9 +19,9 @@ body {
     border-radius: 10px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     text-align: center;
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Disable horizontal scrolling */
-    max-height: 80vh; /* Adjust height to fit within the viewport */
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 80vh;
     animation: fadeInContainer 0.5s ease-in-out;
     position: relative;
 }
@@ -42,7 +42,7 @@ h2 {
     font-size: 24px;
     color: #333;
     animation: fadeIn 1s ease-in-out;
-    width: 100%; /* Ensure consistent width */
+    width: 100%;
 }
 
 .input-group {
@@ -57,7 +57,7 @@ h2 {
     font-size: 14px;
     color: #3498db;
     margin-bottom: 5px;
-    width: 100%; /* Ensure consistent width */
+    width: 100%;
 }
 
 .input-group input,
@@ -80,12 +80,25 @@ h2 {
     appearance: none;
     background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMTMuNzQzbC01LjgzNi01LjgzNmExIDEgMCAwIDAgLTEuNDE0IDEuNDE0bDYuNTI5IDYuNTI5YTEgMSAwIDAgMCAxLjQxNCAwbDYuNTI5LTYuNTI5YTEgMSAwIDAgMC0xLjQxNC0xLjQxNEwxMiAxMy43NDN6IiBmaWxsPSIjMzQ5OERCIi8+PC9zdmc+') no-repeat right 10px center;
     background-color: #fff;
-    background-size: 12px;
     cursor: pointer;
 }
 
-.input-group select option {
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     font-size: 14px;
+}
+
+.button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .dropzone {
@@ -94,107 +107,27 @@ h2 {
     border: 2px dashed #ccc;
     border-radius: 5px;
     text-align: center;
-    color: #999;
-    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    color: #aaa;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     cursor: pointer;
+    background-color: #f9f9f9;
 }
 
 .dropzone:hover {
     border-color: #3498db;
-    background-color: #f0f8ff;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
 }
 
-button {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #3498db;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    margin-top: 20px;
-}
-
-button:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-button:active {
-    transform: translateY(0);
-    box-shadow: none;
-}
-
-/* Spinner styles */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(5px);
-    z-index: 1000;
+input[type="file"] {
     display: none;
 }
 
-.overlay.active {
-    display: block;
-}
-
-.spinner-wrapper {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1100;
-    display: none;
-}
-
-.spinner {
-    width: 80px;
-    height: 80px;
-    position: relative;
-}
-
-.triangle-up {
-    width: 0;
-    height: 0;
-    border-left: 40px solid transparent;
-    border-right: 40px solid transparent;
-    border-bottom: 80px solid #3498db;
-    position: absolute;
-    top: 0;
-    left: 0;
-    animation: popUp 1s ease-in-out infinite alternate;
-}
-
-@keyframes popUp {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.container.blur {
-    filter: blur(5px);
-    pointer-events: none;
-}
-
-/* Animation keyframes */
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -206,6 +139,7 @@ button:active {
         opacity: 0;
         transform: translateX(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -215,8 +149,112 @@ button:active {
 @keyframes fadeInContainer {
     from {
         opacity: 0;
+        transform: scale(0.9);
     }
+
     to {
         opacity: 1;
+        transform: scale(1);
     }
 }
+
+/* Spinner styles */
+.spinner-wrapper {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner div {
+    width: 12px;
+    height: 12px;
+    background-color: #3498db;
+    margin: 2px;
+    animation: bounce 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+    animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+    animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+    animation-delay: -0.9s;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+    }
+}
+
+.blur {
+    filter: blur(5px);
+}
+
+/* Overlay styles */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+}
+
+/* Active spinner and overlay */
+.overlay.active {
+    display: block;
+}
+
+/* Message box styles */
+.message-box {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    pointer-events: none;
+}
+
+.message-box.success {
+    background-color: #2ecc71;
+}
+
+.message-box.error {
+    background-color: #e74c3c;
+}
+
+.message-box.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
