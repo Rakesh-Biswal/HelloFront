@@ -83,6 +83,12 @@
             messageBox.textContent = message;
             messageBox.className = `message-box ${type}`;
             messageBox.classList.add('visible');
+
+            if (type === 'error') {
+                setTimeout(() => {
+                    hideMessage();
+                }, 2000);
+            }
         }
 
         function hideMessage() {
