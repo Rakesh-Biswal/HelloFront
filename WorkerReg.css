@@ -231,7 +231,7 @@ input[type="file"] {
 /* Message box styles */
 .message-box {
     position: fixed;
-    top: 20px;
+    top: -100px; /* Start above the viewport */
     left: 50%;
     transform: translateX(-50%);
     background-color: #333;
@@ -241,8 +241,7 @@ input[type="file"] {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 9999;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-    pointer-events: none;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, top 0.5s ease-in-out;
 }
 
 .message-box.success {
@@ -255,6 +254,29 @@ input[type="file"] {
 
 .message-box.visible {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    top: 50px; /* Adjust to desired position */
 }
 
+button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
